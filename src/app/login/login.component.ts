@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AppRoutingModule } from '../app-routing.module';
 import { LoginService } from '../login.service';
-
 import { Router } from '@angular/router';
+
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -17,7 +18,7 @@ export class LoginComponent implements OnInit {
 
        if (data['role'] == 'user') {
         console.log('user')  
-        //this._router.navigate('/user')
+        this._router.navigate(['/user'])
        }
        else {
        console.log('admin')
