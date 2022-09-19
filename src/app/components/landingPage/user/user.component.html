@@ -1,0 +1,80 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6 m-0" *ngIf="!toggle">
+            <h2 class="text-center mb-2">Login</h2>
+            <form class="myForm text-center" name="formData" #userData="ngForm" (ngSubmit)="LoginUser(userData.value)">
+                <!-- <header>Create new account</header> -->
+
+                <div class="mb-3 form-floating">
+                    <input class="form-control" placeholder="Email" type="text" #emailid required [(ngModel)]="loginData.email"
+                        name="email">
+                        <label for="emailid">Email</label>
+                </div>
+
+                <div class="mb-3 form-floating">
+                    <input class="form-control" type="password" #passwordid placeholder="Password" required
+                        [(ngModel)]="loginData.password" name="password">
+                        <label for="passwordid">Password</label>
+                </div>
+
+                <input type="submit" class="btn btn-sm btn-success mb-3 mt-2" value="LOGIN">
+                <br />
+                <button type="button" #sign_up class="btn btn-sm btn-success" (click)="displayReg()">Create Account</button>
+            </form>
+        </div>
+
+        <div class="col-md-6 m-0" *ngIf="toggle">
+            <h2 class="text-center mb-2">Register</h2>
+            <form class="myForm text-center" name="formData" #userData="ngForm" (ngSubmit)="registerUser(userData.value)">
+                <!-- <header>Create new account</header> -->
+
+                <div class="mb-1 form-floating">
+                    <input class="form-control" type="text" placeholder="First Name" #firstname required [(ngModel)]="userModel.firstname" name="firstname">
+                        <label for="firstname">First name</label>
+                </div>
+
+                <div class="mb-1 form-floating">
+                    <input class="form-control" type="text" placeholder="Last Name" #lastname required [(ngModel)]="userModel.lastname" name="lastname">
+                        <label for="lastname">Last name</label>
+                </div>
+
+                <div class="mb-1 form-floating">
+                    <input class="form-control" placeholder="Email" type="text" #email required [(ngModel)]="userModel.email"
+                        name="email">
+                        <label for="email">Email</label>
+                </div>
+
+                <div class="mb-1 form-floating">
+                    <input class="form-control" type="text" placeholder="Username" #userName required [(ngModel)]="userModel.userName" name="userName">
+                        <label for="userName">Username</label>
+                </div>
+
+                <div class="mb-1 form-floating">
+                    <input class="form-control" placeholder="Phone" type="tel" #phone required [(ngModel)]="userModel.phone"
+                        name="phone">
+                        <label for="phone">Phone number</label>
+                </div>
+
+                <div class="mb-1 form-floating">
+                    <input class="form-control" type="password" #passwordid placeholder="Password" required
+                        [(ngModel)]="userModel.password" name="password">
+                        <label for="passwordid">Password</label>
+                </div>
+                
+                <div class="mb-1 form-floating">
+                    <input class="form-control" type="password" #confirmpasswordid placeholder="Confirm Password" required
+                        [(ngModel)]="userModel.confirmpassword" name="confirmpassword">
+                        <label for="confirmpasswordid">Confirm Password</label>
+                </div>
+
+                <input type="submit" class="btn btn-sm btn-success mb-3 mt-2" value="SIGNUP">
+                <br />
+                <button type="button" #toggle class="btn btn-sm btn-success" (click)="displayReg()">Back to Login</button>
+            </form>
+        </div>
+
+        <div class="col-md-6 m-0">
+            <app-info></app-info>
+        </div>
+    </div>
+</div>
