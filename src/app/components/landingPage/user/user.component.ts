@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LoginService } from '../../../services/login.service';
 import { ApiService } from '../../../services/api.service';
 import { Router } from '@angular/router';
-
+import { CookieService } from 'ngx-cookie-service';
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -24,10 +24,11 @@ export class UserComponent {
     password:'',
     confirmpassword:''
   }
-  constructor(private login: LoginService, private apiService: ApiService, private router:Router) {
+  constructor(private login: LoginService, private apiService: ApiService, private router:Router,private cookieService:CookieService) {
   }
 
   LoginUser(user: any) {
+    
     if (this.loginData.email.trim() == '' || this.loginData.email == null) {
       alert('Email is Required!!');
       return;

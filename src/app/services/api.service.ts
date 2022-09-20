@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Route, Router } from '@angular/router';
+import {Router } from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
@@ -12,10 +12,10 @@ export class ApiService {
     this.http.post<any>('http://localhost:7000/exam-portal/user',user).subscribe(res=>{
       console.log(res)
       this.uservalue=res;
-      // this.router.navigate(['']);
       alert("Account Created! Please Login to Continue");
     })
   }
+
   LoginUser(user:any){
     this.http.post('http://localhost:7000/exam-portal/user/authenticate',user).subscribe(res=>{
     this.uservalue=res;   

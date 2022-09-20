@@ -2,9 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { InfoComponent } from './components/landingPage/info/info.component';
 import { UserComponent } from './components/landingPage/user/user.component';
-import { UserPortalComponent } from './components/user-portal/user-portal.component';
-import { AdminPortalComponent } from './components/admin-portal/admin-portal.component';
-
+import { QuestionDisplayComponent } from './components/dashboard/admin/question-display/question-display.component';
+import { QuizdisplayComponent } from './components/dashboard/user/quizdisplay/quizdisplay.component';
 const routes: Routes = [
 {
   path: "",
@@ -12,11 +11,11 @@ const routes: Routes = [
 },
 {
   path: 'user',
-  component: UserPortalComponent
+  component: QuizdisplayComponent
 },
 {
   path: 'admin',
-  component: AdminPortalComponent
+  component: QuestionDisplayComponent
 }
 ];
 

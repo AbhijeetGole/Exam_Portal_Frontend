@@ -5,15 +5,15 @@ import { HttpClientModule } from '@angular/common/http'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { QuestionDisplayComponent } from './components/question-display/question-display.component';
-import { QuestionModifyComponent } from './components/question-modify/question-modify.component';
-import { QuestionGroupDisplayComponent } from './components/question-group-display/question-group-display.component';
-import { QuestionGroupModifyComponent } from './components/question-group-modify/question-group-modify.component';
-import { QuizModifyComponent } from './components/quiz-modify/quiz-modify.component';
+import { QuestionDisplayComponent } from './components/dashboard/admin/question-display/question-display.component';
+import { QuestionModifyComponent } from './components/dashboard/admin/question-modify/question-modify.component';
+import { QuestionGroupDisplayComponent } from './components/dashboard/admin/question-group-display/question-group-display.component';
+import { QuestionGroupModifyComponent } from './components/dashboard/admin/question-group-modify/question-group-modify.component';
+import { QuizModifyComponent } from './components/dashboard/admin/quiz-modify/quiz-modify.component';
 import { UserComponent } from './components/landingPage/user/user.component';
 import { InfoComponent } from './components/landingPage/info/info.component';
-import { UserPortalComponent } from './components/user-portal/user-portal.component';
-import { AdminPortalComponent } from './components/admin-portal/admin-portal.component';
+import { QuizdisplayComponent } from './components/dashboard/user/quizdisplay/quizdisplay.component';
+import { CreateformComponent } from './components/dashboard/admin/createform/createform.component';
 
 @NgModule({
   declarations: [
@@ -25,8 +25,8 @@ import { AdminPortalComponent } from './components/admin-portal/admin-portal.com
     QuizModifyComponent,
     UserComponent,
     InfoComponent,
-    UserPortalComponent,
-    AdminPortalComponent
+    QuizdisplayComponent,
+    CreateformComponent,
   ],
   imports: [
     BrowserModule,

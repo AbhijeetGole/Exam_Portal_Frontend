@@ -1,0 +1,150 @@
+<div *ngIf="screenWidth>700px">
+    <div class="container mt-3">
+        <button type="button" class="create-btn btn btn-success btn-md ms-auto float-end" data-bs-toggle="modal"
+            data-bs-target="#staticBackdrop">Create+</button>
+    </div>
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Create Question</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="myForm text-center" name="formData" #createQue="ngForm"
+                        (ngSubmit)="createQuestion(createQue.value)">
+                        <div class="mb-3 form-floating">
+                            <input class="form-control" placeholder="Question" type="text" #title required
+                                [(ngModel)]="Question.title" name="title">
+                            <label for="emailid">Question</label>
+                        </div>
+                        <div class="mb-3 form-floating">
+                            <select #type class="form-select" name="type" [(ngModel)]="Question.type">
+                                <option value="Node" selected>Node</option>
+                                <option value="Java">Java</option>
+                                <option value="Javascript">Javascript</option>
+                                <option value="Angular">Angular</option>
+                                <option value="Mongo">Mongo</option>
+                                <option value="Spring">Spring</option>
+                            </select>
+                            <label for="type">Type</label>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3 form-floating">
+                                    <input class="form-control" type="text" #option1 placeholder="Option 1" required
+                                        [(ngModel)]="Question.option1" name="option1">
+                                    <label for="option1">Option 1</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3 form-floating">
+                                    <input class="form-control" type="text" #option2 placeholder="Option 2" required
+                                        [(ngModel)]="Question.option2" name="option2">
+                                    <label for="option1">Option 2</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3 form-floating">
+                                    <input class="form-control" type="text" #option1 placeholder="Option 3" required
+                                        [(ngModel)]="Question.option3" name="option3">
+                                    <label for="option3">Option 3</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3 form-floating">
+                                    <input class="form-control" type="text" #option1 placeholder="Option 4" required
+                                        [(ngModel)]="Question.option4" name="option4">
+                                    <label for="option4">Option 4</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3 form-floating">
+                            <select #answer class="form-select" name="answer" [(ngModel)]="Question.answer">
+                                <option value="option1" selected>Option 1</option>
+                                <option value="option2">Option 2</option>
+                                <option value="option3">Option 3</option>
+                                <option value="option4">Option 4</option>
+                            </select>
+                            <label for="option1">Correct Answer</label>
+                        </div>
+
+                        <div class="mb-3 form-floating">
+                            <select #difficultyLevel class="form-select" name="difficultyLevel" placeholder="Difficulty"
+                                [(ngModel)]="Question.difficultyLevel">
+                                <option value="easy" selected>Easy</option>
+                                <option value="medium">Medium</option>
+                                <option value="difficult">Difficult</option>
+                            </select>
+                            <label for="difficulty">Difficulty</label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="createQuestion(createQue.value)">Create</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="screenWidth<700px">
+    <div class="container mt-3">
+        <button type="button" class="create-btn btn btn-success btn-md ms-auto float-end" (click)="formDisplay()"
+            *ngIf="!formdisplay">Create+</button>
+    </div>
+    <div class="container mt-3 mb-3" *ngIf="formdisplay">
+        <form class="myForm text-center" name="formData" #userData="ngForm">
+            <div class="mb-3 form-floating">
+                <input class="form-control" placeholder="Question" type="text" placeholder="Question" #question required
+                    name="question">
+                <label for="question">Question</label>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3 form-floating">
+                        <input class="form-control" type="text" #option1 placeholder="Option 1" required name="option1">
+                        <label for="option1">Option 1</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3 form-floating">
+                        <input class="form-control" type="text" #option2 placeholder="Option 2" required name="option2">
+                        <label for="option1">Option 2</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3 form-floating">
+                        <input class="form-control" type="text" #option1 placeholder="Option 3" required name="option3">
+                        <label for="option3">Option 3</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3 form-floating">
+                        <input class="form-control" type="text" #option1 placeholder="Option 4" required name="option4">
+                        <label for="option4">Option 4</label>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3 form-floating">
+                <input class="form-control" type="text" #answer placeholder="Answer" required name="answer">
+                <label for="option1">Correct Answer</label>
+            </div>
+
+            <div class="mb-3 form-floating">
+                <select #difficulty class="form-select" name="difficulty">
+                    <option value="easy">Easy</option>
+                    <option value="medium">Medium</option>
+                    <option value="difficult">Difficult</option>
+                </select>
+                <label for="difficulty">Difficulty</label>
+            </div>
+            <input type="submit" class="btn btn-sm btn-success mb-3 mt-2" value="Create">
+        </form>
+    </div>
+</div>
