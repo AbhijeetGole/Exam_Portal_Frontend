@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {Router } from '@angular/router';
+import { CookieService} from 'ngx-cookie-service'
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
   uservalue:any = [];
-  constructor(private http:HttpClient, private router: Router) { }
+  constructor(private http:HttpClient, private router: Router,private cookie:CookieService) { }
 
   registerUser(user:any){
     this.http.post<any>('http://localhost:7000/exam-portal/user',user).subscribe(res=>{
@@ -17,9 +18,12 @@ export class ApiService {
   }
 
   LoginUser(user:any){
-    this.http.post('http://localhost:7000/exam-portal/user/authenticate',user).subscribe(res=>{
+    this.http.post('http://localhost:7000/exam-portal/user/authenticate',user).subscribe((res:any)=>{
     this.uservalue=res;   
-    alert(this.uservalue.message) 
+    // alert(this.uservalue.message) 
+    //console.log(res['token'])
+    this.cookie.set('jwt',res['token'])
+
     if(this.uservalue.role=='admin'){
       this.router.navigate(['admin']);
     }else if(this.uservalue.role=='user'){
@@ -36,16 +40,15 @@ export class ApiService {
      
     })
   }
-  Authenticate(user:any){
-    this.http.post<any>('http://localhost:7000/exam-portal/token/validate',user).subscribe(res=>{
-      console.log(res)
-     
+  Authenticate(){
+    this.http.get<any>('http://localhost:7000/exam-portal/token/validate').subscribe(res=>{
+      console.log(res);
     })
   }
   CreateQue(user:any){
     this.http.post<any>('http://localhost:8000/question',user).subscribe(res=>{
       console.log(res)
-      alert("Question Added Successfully")
+      // alert("Question Added Successfully")
      
     })
   }

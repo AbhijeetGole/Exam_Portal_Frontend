@@ -3,6 +3,7 @@ import { LoginService } from '../../../services/login.service';
 import { ApiService } from '../../../services/api.service';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import {Toast} from 'bootstrap';
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -10,6 +11,8 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class UserComponent {
   toggle = false;
+  showRegisterToast = false;
+  showLoginToast = false;
   loginData = {
     email: '',
     password: ''
@@ -38,12 +41,17 @@ export class UserComponent {
       return;
     }
     this.apiService.LoginUser(user);
+    this.showLoginToast = true;
 
+    // const toastLiveExample = document.getElementById('liveToast')
+    // const toast = new bootstrap.Toast(toastLiveExample)
+    // toast.show();
   }
 
   registerUser(user: any) {
     this.apiService.registerUser(user)
     this.toggle = !this.toggle
+    this.showRegisterToast = true;
   }
   
   displayReg() {

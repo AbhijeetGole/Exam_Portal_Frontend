@@ -4,6 +4,7 @@ import { InfoComponent } from './components/landingPage/info/info.component';
 import { UserComponent } from './components/landingPage/user/user.component';
 import { QuestionDisplayComponent } from './components/dashboard/admin/question-display/question-display.component';
 import { QuizdisplayComponent } from './components/dashboard/user/quizdisplay/quizdisplay.component';
+import { AuthGuard } from './auth.guard'
 const routes: Routes = [
 {
   path: "",
@@ -15,12 +16,14 @@ const routes: Routes = [
 },
 {
   path: 'admin',
-  component: QuestionDisplayComponent
+  component: QuestionDisplayComponent,
+  // canActivate: [AuthGuard]
 }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  // providers: [AuthGuard]
 })
 export class AppRoutingModule { }

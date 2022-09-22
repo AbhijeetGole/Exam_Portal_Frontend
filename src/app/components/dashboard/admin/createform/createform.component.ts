@@ -11,6 +11,7 @@ import { Router } from '@angular/router'
 export class CreateformComponent {
 
   formdisplay = false;
+  showCreateToast = false;
   screenWidth:any;
 
   Question:any = {
@@ -25,7 +26,7 @@ export class CreateformComponent {
     difficultyLevel: ''
   }
 
-  constructor(private questionservice:QuestionService, private router:Router) {
+  constructor(private questionService:QuestionService, private router:Router) {
     this.screenWidth = window.innerWidth;
   }
   formDisplay() {
@@ -33,9 +34,13 @@ export class CreateformComponent {
   }
 
   createQuestion(data:any):any{
-    console.log(data);
-    this.questionservice.createNewQuestion(data);
-    location.reload();
+    // console.log(data);
+    this.questionService.createNewQuestion(data);
+    this.showCreateToast = true;
+    setTimeout(()=>{
+      location.reload()
+    }, 4000);
+
     // this.router.navigate([this.router.url])
     // this.questionservice.getAllQuestions();
   }

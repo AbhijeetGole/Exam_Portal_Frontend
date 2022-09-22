@@ -85,7 +85,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="createQuestion(createQue.value)">Create</button>
+                    <button type="button" class="btn btn-success" data-bs-dismiss="modal"
+                        (click)="createQuestion(createQue.value)">Create</button>
                 </div>
             </div>
         </div>
@@ -147,4 +148,10 @@
             <input type="submit" class="btn btn-sm btn-success mb-3 mt-2" value="Create">
         </form>
     </div>
+</div>
+
+<div class="toast-container position-fixed top-0 end-0 p-3" *ngIf="showCreateToast">
+    <ngb-toast class="bg-success text-light">
+        Question Created Successfully
+    </ngb-toast>
 </div>

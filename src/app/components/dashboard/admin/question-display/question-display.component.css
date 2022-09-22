@@ -1,0 +1,9 @@
+.updatebtn {
+    margin-right: 5px;
+}
+
+@media screen and (max-width: 992px) { 
+    .updatebtn {
+        margin-right: 0px;
+    }
+}
