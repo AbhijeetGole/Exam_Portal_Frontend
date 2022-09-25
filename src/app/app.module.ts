@@ -14,7 +14,8 @@ import { QuizModifyComponent } from './components/dashboard/admin/quiz-modify/qu
 import { UserComponent } from './components/landingPage/user/user.component';
 import { InfoComponent } from './components/landingPage/info/info.component';
 import { QuizdisplayComponent } from './components/dashboard/user/quizdisplay/quizdisplay.component';
-import { CreateformComponent } from './components/dashboard/admin/createform/createform.component';
+import { CreateQuestionFormComponent } from './components/dashboard/admin/create-question-form/create-question-form.component';
+import { CreateQuestionGroupFromComponent } from './components/dashboard/admin/create-question-group-form/create-question-group-form.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { CreateformComponent } from './components/dashboard/admin/createform/cre
     UserComponent,
     InfoComponent,
     QuizdisplayComponent,
-    CreateformComponent,
+    CreateQuestionFormComponent,
+    CreateQuestionGroupFromComponent,
   ],
   imports: [
     BrowserModule,

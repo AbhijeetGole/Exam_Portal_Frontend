@@ -3,8 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { InfoComponent } from './components/landingPage/info/info.component';
 import { UserComponent } from './components/landingPage/user/user.component';
 import { QuestionDisplayComponent } from './components/dashboard/admin/question-display/question-display.component';
-import { QuizdisplayComponent } from './components/dashboard/user/quizdisplay/quizdisplay.component';
-import { AuthGuard } from './auth.guard'
+import { QuizdisplayComponent } from './components/dashboard/user/quiz-display/quiz-display.component';
+import { QuestionGroupDisplayComponent } from './components/dashboard/admin/question-group-display/question-group-display.component';
 const routes: Routes = [
 {
   path: "",
@@ -17,13 +17,15 @@ const routes: Routes = [
 {
   path: 'admin',
   component: QuestionDisplayComponent,
-  // canActivate: [AuthGuard]
+},
+{
+  path: 'question-group',
+  component: QuestionGroupDisplayComponent
 }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
-  // providers: [AuthGuard]
 })
 export class AppRoutingModule { }

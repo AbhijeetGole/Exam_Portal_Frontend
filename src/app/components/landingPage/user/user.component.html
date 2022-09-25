@@ -1,111 +1,90 @@
-<div class="container-fluid">
+<div class="container-fluid info-sec">
     <div class="row">
-        <div class="col-md-6 m-0" >
-            <app-info></app-info>
+        <div class="col-md-6 d-flex justify-content-center align-items-center zen-info">
+            <div>
+                <app-info></app-info>
+                <div *ngIf="!toggle">
+                    <img src="./assets/signin-image.png" alt="" srcset="" class="img-intro">
+                </div>
+                <div *ngIf="toggle">
+                    <img src="./assets/signup-image.png" alt="" srcset="" class="img-intro">
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-6 d-flex justify-content-center align-items-center text-center log-sec py-5" *ngIf="!toggle">
+            <div class="text-center page-wrap">
+                <h2 class="text-center mb-5 head">LOGIN</h2>
+                <form class="form" name="formData" #userData="ngForm" (ngSubmit)="LoginUser(userData.value)">
+                    <!-- hihi -->
+                    <div class="form-item">
+                        <input type="email" #emailid required [(ngModel)]="loginData.email" name="email" />
+                        <label for="emailid">Email</label>
+                    </div>
+                    <div class="form-item">
+                        <input type="password" id="password" autocomplete="off" #passwordid required
+                            [(ngModel)]="loginData.password" name="password" />
+                        <label for="passwordid">Password</label>
+                    </div>
+                    <!-- <header>Create new account</header> -->
+
+                    <input type="submit" class="inp login-btn py-2 mb-4" value="LOGIN" />
+                    <br />
+                    <button type="button" #sign_up class="signup py-2" (click)="displayReg()">
+                        Create Account
+                    </button>
+                </form>
+            </div>
         </div>
 
-        <div class="col-md-6 m-0" *ngIf="!toggle">
-            <h2 class="text-center mb-2">Login</h2>
-            <form class="myForm text-center" name="formData" #userData="ngForm" (ngSubmit)="LoginUser(userData.value)">
-                <!-- <header>Create new account</header> -->
+        <div class="col-md-6 d-flex justify-content-center align-items-center my-auto sign-sec" *ngIf="toggle">
+            <div>
+                <h2 class="text-center mb-2 head">SIGN UP</h2>
+                <form class="text-center" name="formData" #userData="ngForm" (ngSubmit)="registerUser(userData.value)">
+                    <!-- <header>Create new account</header> -->
+                    <div class="form-item">
+                        <input type="text" #firstname required [(ngModel)]="userModel.firstname" name="firstname" />
+                        <label for="firstname">First Name</label>
+                    </div>
 
-                <div class="mb-3 form-floating">
-                    <input class="form-control" placeholder="Email" type="text" #emailid required
-                        [(ngModel)]="loginData.email" name="email">
-                    <label for="emailid">Email</label>
-                </div>
+                    <div class="form-item">
+                        <input type="text" #lastname required [(ngModel)]="userModel.lastname" name="lastname" />
+                        <label for="lastname">Last Name</label>
+                    </div>
 
-                <div class="mb-3 form-floating">
-                    <input class="form-control" type="password" #passwordid placeholder="Password" required
-                        [(ngModel)]="loginData.password" name="password">
-                    <label for="passwordid">Password</label>
-                </div>
-                <div class="ms-auto float-end">
-                    <button type="submit" class="btn btn-sm btn-success me-2" value="LOGIN">Login</button>
-                    <button type="button" #sign_up class="btn btn-sm btn-primary" (click)="displayReg()">Create
-                        Account</button>
-                </div>
-            </form>
-        </div>
+                    <div class="form-item">
+                        <input type="text" #emailid required [(ngModel)]="userModel.email" name="email" />
+                        <label for="email">Email</label>
+                    </div>
 
-        <div class="col-md-6 m-0" *ngIf="toggle">
-            <h2 class="text-center mb-2">Register</h2>
-            <form class="myForm text-center" name="formData" #userData="ngForm"
-                (ngSubmit)="registerUser(userData.value)">
-                <!-- <header>Create new account</header> -->
+                    <div class="form-item">
+                        <input type="text" #userName required [(ngModel)]="userModel.userName" name="userName" />
+                        <label for="userName">Username</label>
+                    </div>
 
-                <div class="mb-1 form-floating">
-                    <input class="form-control" type="text" placeholder="First Name" #firstname required
-                        [(ngModel)]="userModel.firstname" name="firstname">
-                    <label for="firstname">First name</label>
-                </div>
+                    <div class="form-item">
+                        <input type="tel" #phone required [(ngModel)]="userModel.phone" name="phone" />
+                        <label for="phone">Phone Number</label>
+                    </div>
 
-                <div class="mb-1 form-floating">
-                    <input class="form-control" type="text" placeholder="Last Name" #lastname required
-                        [(ngModel)]="userModel.lastname" name="lastname">
-                    <label for="lastname">Last name</label>
-                </div>
+                    <div class="form-item">
+                        <input type="password" #passwordid required [(ngModel)]="userModel.password" name="password" />
+                        <label for="passwordid">Password</label>
+                    </div>
 
-                <div class="mb-1 form-floating">
-                    <input class="form-control" placeholder="Email" type="text" #email required
-                        [(ngModel)]="userModel.email" name="email">
-                    <label for="email">Email</label>
-                </div>
+                    <div class="form-item">
+                        <input type="password" #confirmpasswordid required [(ngModel)]="userModel.confirmpassword"
+                            name="confirmpassword" />
+                        <label for="confirmpasswordid">Confirm Password</label>
+                    </div>
 
-                <div class="mb-1 form-floating">
-                    <input class="form-control" type="text" placeholder="Username" #userName required
-                        [(ngModel)]="userModel.userName" name="userName">
-                    <label for="userName">Username</label>
-                </div>
-
-                <div class="mb-1 form-floating">
-                    <input class="form-control" placeholder="Phone" type="tel" #phone required
-                        [(ngModel)]="userModel.phone" name="phone">
-                    <label for="phone">Phone number</label>
-                </div>
-
-                <div class="mb-1 form-floating">
-                    <input class="form-control" type="password" #passwordid placeholder="Password" required
-                        [(ngModel)]="userModel.password" name="password">
-                    <label for="passwordid">Password</label>
-                </div>
-
-                <div class="mb-1 form-floating">
-                    <input class="form-control" type="password" #confirmpasswordid placeholder="Confirm Password"
-                        required [(ngModel)]="userModel.confirmpassword" name="confirmpassword">
-                    <label for="confirmpasswordid">Confirm Password</label>
-                </div>
-                <div class="ms-auto float-end mt-2">
-                    <button type="submit" class="btn btn-sm btn-success me-2">Sign Up</button>
-                    <button type="button" #toggle class="btn btn-sm btn-primary" (click)="displayReg()">Back to
-                        Login</button>
-                </div>
-            </form>
+                    <input type="submit" class="login-btn inp py-2 mb-3" value="SIGNUP" />
+                    <br />
+                    <button type="button" #toggle class="signup py-2" (click)="displayReg()">
+                        Back to Login
+                    </button>
+                </form>
+            </div>
         </div>
     </div>
-</div>
-
-<!-- <div class="toast-container position-fixed bottom-0 end-0 p-3">
-    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-      <div class="toast-header">
-        <img src="..." class="rounded me-2" alt="...">
-        <strong class="me-auto">Bootstrap</strong>
-        <small>11 mins ago</small>
-        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-      </div>
-      <div class="toast-body">
-        Hello, world! This is a toast message.
-      </div>
-    </div>
-  </div> -->
-<div class="toast-container position-fixed top-0 end-0 p-3">
-    <ngb-toast header="Notification header" *ngIf="showRegisterToast">
-        Content of the notification
-      </ngb-toast>
-</div>
-
-<div class="toast-container position-fixed top-0 end-0 p-3">
-    <ngb-toast header="Notification header" *ngIf="showLoginToast">
-        Login Successful
-      </ngb-toast>
 </div>
