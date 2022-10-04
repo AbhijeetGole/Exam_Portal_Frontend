@@ -6,6 +6,8 @@ import { ApiService } from '../../../../services/api.service';
 import { CookieService } from 'ngx-cookie-service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { UpdateDeletedQuestionService } from 'src/app/services/update-deleted-question.service';
+import { UpdateDeletedQuestionGroupService } from 'src/app/services/update-deleted-question-group.service';
 
 @Component({
   selector: 'app-question-group-display',
@@ -21,10 +23,15 @@ export class QuestionGroupDisplayComponent implements OnInit {
   showUpdateToast = false;
   showDeleteToast = false;
   uservalue: any;
+  page: number = 1;
+  count: number = 0;
+  tableSize: number = 7;
 
   constructor(private questionGrpService: QuestionGrpService, private apiSerive: ApiService,
     private http: HttpClient, private router: Router, private cookie: CookieService,
-    private questionSharingService: QuestionSharingService) {
+    private questionSharingService: QuestionSharingService,
+    private updateDeletedQuestionService: UpdateDeletedQuestionService,
+    private updateDeletedQuestionGroupService: UpdateDeletedQuestionGroupService) {
     this.screenWidth = window.innerWidth;
   }
 
@@ -44,6 +51,24 @@ export class QuestionGroupDisplayComponent implements OnInit {
       })
 
     this.getQuestionGroup();
+
+    this.updateDeletedQuestionService.selectedId.subscribe((id: any) => {
+      if (id != '') {
+        this.updateQuestionGroupWithId(id);
+      }
+    }, (error: any) => {
+      console.log(error.message);
+    })
+
+    if (this.screenWidth < 378) {
+      this.tableSize = 4;
+    }
+    if (this.screenWidth > 378 && this.screenWidth < 480) {
+      this.tableSize = 6;
+    }
+    if (this.screenWidth > 480) {
+      this.tableSize = 7;
+    }
   }
 
   getQuestionGroup() {
@@ -63,7 +88,7 @@ export class QuestionGroupDisplayComponent implements OnInit {
     this.router.navigate(['question-group/creategroup']);
   }
 
-  updateQuestionGroup(id: any){
+  updateQuestionGroup(id: any) {
     this.router.navigate(['question-group/updategroup', id])
   }
 
@@ -72,18 +97,33 @@ export class QuestionGroupDisplayComponent implements OnInit {
     this.showDeleteToast = false;
     this.questionGrpService.deleteQuestionGroup(id).subscribe((res: any) => {
       console.log(res)
+      this.updateDeletedQuestionGroupService.setDeletedQuestionGroupId(id);
       this.showDeleteToast = true;
       this.getQuestionGroup();
     })
   }
 
-  // updateQuestionGroup(id: any, data: any) {
-  //   this.showUpdateToast = false;
-  //   this.questionGrpService.updateQuestionGroup(id, data).subscribe((data: any) => {
-  //     this.showUpdateToast = true;
-  //     this.getQuestionGroup();
-  //   });
-  // }
+  updateQuestionGroupWithId(id: any) {
+    this.questionGrps.forEach(questionGrp => {
+      let index = questionGrp.questionID.indexOf(id);
+
+      if (index != -1) {
+        questionGrp.questionID.splice(index, 1);
+
+        let questionGroupUpdate = {
+          title: questionGrp.title,
+          topic: questionGrp.topic,
+          questionID: questionGrp.questionID
+        }
+
+        this.questionGrpService.updateQuestionGroup(questionGrp._id, questionGroupUpdate).subscribe((response: any) => {
+          this.updateDeletedQuestionService.setDeletedQuestionId('');
+        }, (error: any) => {
+          console.log(error.message);
+        })
+      }
+    })
+  }
 
   getQuestionGroupById(id: any) {
     this.questionGrpService.getQuestionGroupbyId(id)
@@ -96,5 +136,16 @@ export class QuestionGroupDisplayComponent implements OnInit {
           console.error('Request failed with error' + error);
         }
       )
+  }
+
+  onTableDataChange(event: any) {
+    this.page = event;
+    this.getQuestionGroup();
+  }
+
+  onTableSizeChange(event: any): void {
+    this.tableSize = event.target.value;
+    this.page = 1;
+    this.getQuestionGroup();
   }
 }

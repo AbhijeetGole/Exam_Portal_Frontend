@@ -19,7 +19,7 @@ export class QuizService {
      'jwt':this.cookie.get('jwt')
 
     });
-    return this.http.get(environment.apiUrl+'quiz/', {withCredentials: true});
+    return this.http.get(environment.apiUrl+'quiz/', {headers: headers, withCredentials: true});
   }
 
   getQuizById(id:any) {
@@ -29,7 +29,7 @@ export class QuizService {
      'jwt':this.cookie.get('jwt')
 
     });
-    return this.http.get(environment.apiUrl+'quiz/'+id, {withCredentials: true});
+    return this.http.get(environment.apiUrl+'quiz/'+id, {headers: headers, withCredentials: true});
   }
 
   createQuiz(data:any){
@@ -39,7 +39,7 @@ export class QuizService {
      'jwt':this.cookie.get('jwt')
 
     });
-    return this.http.post<any>(environment.apiUrl+'quiz/',data, {withCredentials: true})
+    return this.http.post<any>(environment.apiUrl+'quiz/',data, {headers: headers, withCredentials: true})
   }
   
   updateQuizById(id: any, data: any) {
@@ -49,7 +49,7 @@ export class QuizService {
      'jwt':this.cookie.get('jwt')
 
     });
-    return this.http.put(environment.apiUrl+'quiz/' + id, data, {withCredentials: true});
+    return this.http.put(environment.apiUrl+'quiz/' + id, data, {headers: headers, withCredentials: true});
   }
   
   deleteQuizById(id: any) {
@@ -59,6 +59,6 @@ export class QuizService {
      'jwt':this.cookie.get('jwt')
 
     });
-    return this.http.delete<any>(environment.apiUrl+'quiz/' + id, {withCredentials: true});
+    return this.http.delete<any>(environment.apiUrl+'quiz/' + id, {headers: headers, withCredentials: true});
   }
 }

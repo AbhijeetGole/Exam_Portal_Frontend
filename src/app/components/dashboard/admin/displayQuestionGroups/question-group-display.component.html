@@ -3,17 +3,18 @@
     <table class="table table-hover table-striped">
         <thead>
             <tr>
-                <th scope="col" class="text-center">#</th>
-                <th scope="col">Title</th>
-                <th scope="col" class="text-center">Topic</th>
-                <th scope="col" class="text-center">Action</th>
+                <th scope="col" class="text-center col-md-1">#</th>
+                <th scope="col" class="col-md-7">Title</th>
+                <th scope="col" class="col-md-2">Topic</th>
+                <th scope="col" class="text-center col-md-2">Action</th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let questiongrp of questionGrps, let i=index">
-                <th scope="row" class="text-center align-middle">{{i+1}}</th>
+            <tr
+                *ngFor="let questiongrp of questionGrps | paginate : {itemsPerPage: tableSize, currentPage: page, totalItems: count}, let i=index">
+                <th scope="row" class="text-center align-middle">{{(page-1)*tableSize + (i+1)}}</th>
                 <td class="align-middle">{{ questiongrp.title }}</td>
-                <td class="text-center align-middle">{{questiongrp.topic}}</td>
+                <td class="align-middle">{{questiongrp.topic}}</td>
                 <td class="text-center">
                     <button class="btn btn-primary updatebtn align-items-center" placement="top"
                         ngbTooltip="Update Question" #{{question._id}} (click)="updateQuestionGroup(questiongrp._id)">
@@ -29,6 +30,13 @@
         </tbody>
     </table>
 </div>
+<div class="d-flex justify-content-center container">
+    <div class=" paginationDiv">
+        <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+        </pagination-controls>
+    </div>
+</div>
+
 
 <div class="d-flex justify-content-center">
     <div class="toast-container position-fixed top-0 p-3" *ngIf="showUpdateToast">
