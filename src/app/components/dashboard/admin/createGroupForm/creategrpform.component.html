@@ -1,0 +1,57 @@
+<div class="container d-flex justify-content-center mt-5">
+    <form class="selectFrom text-center" #createQueGroup="ngForm" (ngSubmit)="createQuestionGroup(createQueGroup.value)"
+        name="formData">
+        <button type="button" class="btn btn-success mb-3"
+            (click)="createQuestionGroup(createQueGroup.value)">Create</button>
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <div class="form-floating">
+                    <input type="text" [(ngModel)]="QuestionGroup.title" class="form-control" #title name="title">
+                    <label for="title">Title</label>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="form-floating">
+                    <select #type class="form-select" name="type" (change)="getQuestionByTopic(type.value)">
+                        <option value="All" selected>All</option>
+                        <option value="Node">Node</option>
+                        <option value="Java">Java</option>
+                        <option value="Javascript">Javascript</option>
+                        <option value="Angular">Angular</option>
+                        <option value="Mongo">Mongo</option>
+                        <option value="Spring">Spring</option>
+                    </select>
+                    <label for="type">Type</label>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="form-floating">
+                    <input type="text" [(ngModel)]="QuestionGroup.topic" class="form-control" #topic name="topic">
+                    <label for="topic">Topic</label>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="container">
+    <table class="table table-hover table-striped">
+        <thead>
+            <tr>
+                <th scope="col" class="text-center">#</th>
+                <th scope="col">Questions</th>
+                <th scope="col" class="text-center">Topic</th>
+                <th scope="col" class="text-center">Select <input type="checkbox" [checked]="selectAll"
+                        (change)="onSelectAll()"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let question of filteredQuestions, let i=index">
+                <th scope="row" class="text-center align-middle">{{ i+1 }}</th>
+                <td class="align-middle">{{ question.title }}</td>
+                <td class="text-center align-middle">{{ question.type }}</td>
+                <td class="text-center"><input type="checkbox" [value]=question._id id={{question._id}}
+                        [checked]="isChecked(question._id)" (change)="onCheckChanged($event)"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
