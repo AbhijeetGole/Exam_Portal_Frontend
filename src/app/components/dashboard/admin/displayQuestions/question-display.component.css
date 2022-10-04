@@ -7,6 +7,10 @@
     top: 10%;
 }
 
+.title{
+    word-break: break-all;
+}
+
 @media screen and (max-width: 992px) { 
     .updatebtn {
         margin-right: 0px;

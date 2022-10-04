@@ -7,6 +7,7 @@ import { QuestionService } from 'src/app/services/question.service';
 import { CookieService } from 'ngx-cookie-service';
 import { QuestionSharingService } from '../../../../services/question-sharing.service';
 import { environment } from 'src/environments/environment';
+import { UpdateDeletedQuestionService } from 'src/app/services/update-deleted-question.service';
 
 @Component({
   selector: 'app-question-display',
@@ -29,7 +30,8 @@ export class QuestionDisplayComponent implements OnInit {
 
   constructor(private questionService: QuestionService, private apiSerive: ApiService,
     private http: HttpClient, private router: Router, private cookie: CookieService,
-    private questionSharingService: QuestionSharingService) {
+    private questionSharingService: QuestionSharingService,
+    private updateDeletedQuestionService: UpdateDeletedQuestionService) {
     this.screenWidth = window.innerWidth;
   }
 
@@ -49,6 +51,16 @@ export class QuestionDisplayComponent implements OnInit {
       })
 
     this.getQuestions();
+
+    if(this.screenWidth<378){
+      this.tableSize = 4;
+    }
+    if(this.screenWidth>378 && this.screenWidth<480){
+      this.tableSize = 6;
+    }
+    if(this.screenWidth>480){
+      this.tableSize = 7;
+    }
   }
 
   getQuestions() {
@@ -66,6 +78,7 @@ export class QuestionDisplayComponent implements OnInit {
   deleteQuestion(id: any) {
     this.showDeleteToast = false;
     this.questionService.deleteQuestion(id).subscribe((res: any) => {
+      this.updateDeletedQuestionService.setDeletedQuestionId(id)
       this.showDeleteToast = true;
       this.getQuestions();
     })

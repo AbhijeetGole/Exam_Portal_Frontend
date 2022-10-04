@@ -14,8 +14,8 @@
         <tbody>
             <tr
                 *ngFor="let question of questions | paginate : {itemsPerPage: tableSize, currentPage: page, totalItems: count}, let i=index">
-                <th scope="row" class="text-center align-middle">{{(page-1)*7 + (i+1)}}</th>
-                <td class="align-middle">{{ question.title }}</td>
+                <th scope="row" class="text-center align-middle">{{(page-1)*tableSize + (i+1)}}</th>
+                <td class="align-middle title">{{ question.title }}</td>
                 <td class="text-center align-middle">{{question.type}}</td>
                 <td class="text-center">
                     <button class="btn btn-primary updatebtn align-items-center" placement="top"
@@ -31,7 +31,9 @@
             </tr>
         </tbody>
     </table>
-    <div class="d-flex justify-content-center container">
+</div>
+<div class="d-flex justify-content-center container">
+    <div class=" paginationDiv">
         <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
         </pagination-controls>
     </div>
