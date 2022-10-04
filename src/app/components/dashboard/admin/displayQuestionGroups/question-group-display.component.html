@@ -1,0 +1,69 @@
+<div class="container">
+    <button class="btn btn-success float-end mt-3 mb-3" (click)="createQuestionGroup()">Create</button>
+    <table class="table table-hover table-striped">
+        <thead>
+            <tr>
+                <th scope="col" class="text-center">#</th>
+                <th scope="col">Title</th>
+                <th scope="col" class="text-center">Topic</th>
+                <th scope="col" class="text-center">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let questiongrp of questionGrps, let i=index">
+                <th scope="row" class="text-center align-middle">{{i+1}}</th>
+                <td class="align-middle">{{ questiongrp.title }}</td>
+                <td class="text-center align-middle">{{questiongrp.topic}}</td>
+                <td class="text-center">
+                    <button class="btn btn-primary updatebtn align-items-center" placement="top"
+                        ngbTooltip="Update Question" #{{question._id}} (click)="updateQuestionGroup(questiongrp._id)">
+                        <i class="bi bi-pencil-square"></i>
+                    </button>
+                    <button class="btn btn-danger" placement="top" ngbTooltip="Delete Question!" #{{question._id}}
+                        (click)="getQuestionGroupById(questiongrp._id)" data-bs-toggle="modal"
+                        data-bs-target="#deletemodal">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="d-flex justify-content-center">
+    <div class="toast-container position-fixed top-0 p-3" *ngIf="showUpdateToast">
+        <ngb-toast class="bg-success text-light">
+            Question Updated Successfully
+        </ngb-toast>
+    </div>
+</div>
+
+<div class="modal fade" id="deletemodal" data-bs-keyboard="false" tabindex="-1" role="dialog"
+    aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLabel">Delete Question</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="myForm text-center">
+                    Confirm Deletion?
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal"
+                    (click)="deleteQuestionGroup(que._id)">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="d-flex justify-content-center">
+    <div class="toast-container position-fixed top-0 p-3" *ngIf="showDeleteToast">
+        <ngb-toast class="bg-danger text-light">
+            Question Deleted Successfully
+        </ngb-toast>
+    </div>
+</div>

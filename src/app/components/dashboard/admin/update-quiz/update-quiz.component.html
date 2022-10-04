@@ -1,0 +1,55 @@
+<div class="container d-flex justify-content-center mt-5">
+    <form class="selectFrom text-center" #updatequiz="ngForm" (ngSubmit)="updateQuiz(updatequiz.value)"
+        name="formData">
+        <button type="button" class="btn btn-success mb-3"
+            (click)="updateQuiz(updatequiz.value)">Update</button>
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <div class="form-floating">
+                    <input type="text" [(ngModel)]="Quiz.title" class="form-control" #title name="title">
+                <label for="name">Title</label>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="form-floating">
+                <select [(ngModel)]="Quiz.duration" class="form-select" #duration name="duration">
+                    <option value="15" selected>15 min</option>
+                    <option value="30">30 min</option>
+                    <option value="45">45 min</option>
+                    <option value="60">1 hr</option>
+                    <option value="120">2 hr</option>
+                </select>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="form-floating">
+                    <input type="text" [(ngModel)]="Quiz.description" class="form-control" #description name="description">
+                <label for="type">Description</label>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="container">
+    <table class="table table-hover table-striped">
+        <thead>
+            <tr>
+                <th scope="col" class="text-center">#</th>
+                <th scope="col">Question-Groups</th>
+                <th scope="col" class="text-center">Topic</th>
+                <th scope="col" class="text-center">Questions</th>
+                <th scope="col" class="text-center">Select </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let questionGroup of questionGroups, let i=index">
+                <th scope="row" class="text-center align-middle">{{ i+1 }}</th>
+                <td class="align-middle">{{ questionGroup.name }}</td>
+                <td class="text-center align-middle">{{ questionGroup.type }}</td>
+                <td class="text-center align-middle">{{ questionGroup.questionID.length }}</td>
+                <td class="text-center"><input type="checkbox" [value]=questionGroup._id id={{questionGroup._id}}
+                        [checked]="isChecked(questionGroup._id)" (change)="onCheckChanged($event)"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

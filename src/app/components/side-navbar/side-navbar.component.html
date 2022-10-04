@@ -1,0 +1,27 @@
+<nav class="navbar sticky-top">
+  <div class="container-fluid">
+    <div class="logo-container d-flex align-items-center">
+      <button class="logo" (click)="toggleCollapse()" *ngIf="collapsed"><i class="bi bi-list"></i></button>
+      <button class="logo" (click)="toggleCollapse()" *ngIf="!collapsed"><i class="bi bi-x"></i></button>
+      <div class="logo-text">ZenQuiz</div>
+    </div>
+  </div>
+</nav>
+<div class="d-flex sidenav flex-column" [ngClass]="collapsed ? 'sidenav-collapsed' : ''">
+
+  <ul class="sidenav-nav d-flex flex-column mb-auto">
+    <li class="sidenav-nav-item" *ngFor="let data of navData">
+      <a class="sidenav-nav-link" [routerLink]="[data.routerLink]" routerLinkActive="active" (click)="toggleCollapse()"
+        [routerLinkActiveOptions]="{exact: true}">
+        <i class="sidenav-nav-icon" [class]="data.icon" *ngIf="!collapsed"></i>
+        <span class="sidenav-link-text" *ngIf="!collapsed">{{
+          data.label
+          }}</span>
+      </a>
+    </li>
+  </ul>
+  <hr class="seperator" *ngIf="!collapsed">
+  <button class="btn btn-success mt-auto" (click)="logout()" *ngIf="!collapsed"><i
+      class="sidenav-nav-icon bi bi-box-arrow-right align-middle"></i><span class="align-middle"
+      *ngIf="!collapsed">Logout</span></button>
+</div>

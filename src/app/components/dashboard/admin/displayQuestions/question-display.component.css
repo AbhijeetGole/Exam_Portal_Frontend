@@ -1,0 +1,20 @@
+.updatebtn {
+    margin-right: 5px;
+}
+
+.toast-container {
+    z-index: 1200;
+    top: 10%;
+}
+
+@media screen and (max-width: 992px) { 
+    .updatebtn {
+        margin-right: 0px;
+    }
+}
+
+@media screen and (max-width: 992px) { 
+    .updatebtn {
+        margin-bottom: 5px;
+    }
+}

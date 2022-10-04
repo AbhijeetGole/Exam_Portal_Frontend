@@ -1,0 +1,18 @@
+<nav class="navbar navbar-expand navbar-dark bg-dark px-2 sticky-top">
+    <div class="side-nav-button p-2 me-3 text-light" (click)="toggleSideNav()">
+        <i class="fa-solid fa-bars"></i>
+    </div>
+    <div class="container-fluid">
+        <a class="navbar-brand px-4" href="#">ZenExam</a>
+        <app-createbtn></app-createbtn>
+        <div class="profile-logo dropstart d-flex ">
+            <button class="btn btn-outline-light dropdown-toggle" data-bs-toggle="dropdown">
+                {{ username }}
+            </button>
+            <ul class="dropdown-menu dropdown-menu-dark">
+                <li><a href="#" class="dropdown-item">Login</a></li>
+                <li><a href="#" class="dropdown-item">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
