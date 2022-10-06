@@ -1,8 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-admin-home',
@@ -10,23 +6,10 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./admin-home.component.css']
 })
 export class AdminHomeComponent implements OnInit {
-  uservalue: any;
-  constructor(private cookie: CookieService, private http: HttpClient, private router: Router) { }
+
+  constructor() { }
 
   ngOnInit(): void {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'jwt': this.cookie.get('jwt')
-    });
-
-    this.http.get(environment.userUrl + 'exam-portal/token/validate', { headers: headers, withCredentials: true })
-      .subscribe((data: any) => {
-        this.uservalue = data
-        if (this.uservalue != 'admin') {
-          alert("You are not LoggedIn")
-          this.router.navigate([''])
-        }
-      })
   }
 
 }

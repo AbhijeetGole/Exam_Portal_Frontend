@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { QuestionService } from 'src/app/services/question.service';
 import { Router } from '@angular/router'
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { QuestionDisplayComponent } from '../displayQuestions/question-display.component';
 import { environment } from 'src/environments/environment';
-import { CookieService } from 'ngx-cookie-service';
+
 @Component({
   selector: 'app-createbtn',
   templateUrl: './create-button.component.html',
@@ -68,24 +68,17 @@ export class CreatebuttonComponent {
     difficultyLevel: ''
   }
 
-  constructor(private questionService: QuestionService, private router: Router, private http: HttpClient, private display: QuestionDisplayComponent, private cookie: CookieService) {
+  constructor(private questionService: QuestionService, private router: Router, private http: HttpClient, private display: QuestionDisplayComponent) {
     this.screenWidth = window.innerWidth;
   }
 
   uservalue: any;
   ngOnInit(): void {
-    const headers = new HttpHeaders({
-
-      'Content-Type': 'application/json',
-      'jwt': this.cookie.get('jwt')
-
-    });
-    this.http.get(environment.apiUrl+"exam-portal/token/validate", { headers: headers, withCredentials: true })
+    this.http.get(environment.userUrl+"exam-portal/token/validate", { observe: 'response', withCredentials: true, responseType: 'text' })
 
       .subscribe((data: any) => {
         this.uservalue = data
-
-        if (this.uservalue != 'admin') {
+        if (this.uservalue.body != "admin") {
           alert("You are not LoggedIn")
           this.router.navigate([''])
         }
@@ -101,7 +94,6 @@ export class CreatebuttonComponent {
   }
 
   createQuestion(data: any): any {
-
     this.showCreateToast = false;
     this.questionService.createNewQuestion(data).subscribe((data: any) => {
       this.showCreateToast = true;
