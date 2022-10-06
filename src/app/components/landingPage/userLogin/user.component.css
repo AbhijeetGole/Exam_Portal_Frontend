@@ -1,53 +1,102 @@
 body {
-    width: 100%;
+  width: 100%;
 }
 
 .zen-info {
-    height: 100vh;
-    padding: 4%;
+  height: 100vh;
+  padding: 4%;
 }
 
 .page-wrap {
-  padding: 5%;
+padding: 5%;
 }
 .login-btn {
-    width: 100%;
-    outline: none;
-    border: none;
-    background: white;
-    border-radius: 5px;
+  width: 100%;
+  outline: none;
+  border: none;
+  background: white;
+  border-radius: 5px;
 }
 
 .log-sec {
-  background-color: #10005d;height: 100vh;
+background-color: #10005d;height: 100vh;
 }
 
 .sign-sec {
-  background-color: #10005d;
-  height: 100vh;
+background-color: #10005d;
+height: 100vh;
 }
 .signup {
-    display: flex;
-    float: right;
-    font-weight: 700;
-    border: none;
-    background: white;
-    padding: 1% 4%;
-    border-radius: 5px;
+  display: flex;
+  float: right;
+  font-weight: 700;
+  border: none;
+  background: white;
+  padding: 1% 4%;
+  border-radius: 5px;
 }
 
 .head {
-  color: white;
+color: white;
 }
 
 
 .form-item{
-    position: relative;
-    margin-bottom: 15px;
+  position: relative;
+  margin-bottom: 15px;
+}
+.form-item input{
+  display: block;
+  width: 400px;
+  height: 45px;
+  background: transparent;
+  border: solid 2px #ccc;
+  transition: all .3s ease;
+  border-radius: 5px;
+  padding: 0 15px
+}
+.form-item input:focus{
+  border-color: white;
+}
+.form-item label{
+  position: absolute;
+  cursor: text;
+  z-index: 2;
+  top: 13px;
+  left: 10px;
+  font-size: 14px;
+  font-weight: bold;
+  background: #10005d;
+  padding: 0 10px;
+  color: white;
+  transition: all .3s ease
+}
+.form-item input:focus + label,
+.form-item input:valid + label{
+  font-size: 11px;
+  top: -5px
+}
+
+input, select, textarea {
+  color: white;
   }
+
+  .inp {
+    color: black !important;
+    font-weight: 700;
+    border-radius: 5px;
+  }
+
+.form-item input:focus + label{
+  color: white
+}
+
+
+
+@media screen and (max-width: 480px) {
   .form-item input{
     display: block;
-    width: 400px;
+    width: 300px;
     height: 45px;
     background: transparent;
     border: solid 2px #ccc;
@@ -55,66 +104,17 @@ body {
     border-radius: 5px;
     padding: 0 15px
   }
-  .form-item input:focus{
-    border-color: white;
-  }
-  .form-item label{
-    position: absolute;
-    cursor: text;
-    z-index: 2;
-    top: 13px;
-    left: 10px;
-    font-size: 14px;
-    font-weight: bold;
-    background: #10005d;
-    padding: 0 10px;
-    color: white;
-    transition: all .3s ease
-  }
-  .form-item input:focus + label,
-  .form-item input:valid + label{
-    font-size: 11px;
-    top: -5px
+
+  .img-intro {
+    width: 100px;
   }
 
-  input, select, textarea {
-    color: white;
-    }
+  .zen-info {
+    height: 40vh;
+    padding: 4%;
+}
 
-    .inp {
-      color: black !important;
-      font-weight: 700;
-      border-radius: 5px;
-    }
-
-  .form-item input:focus + label{
-    color: white
-  }
-
-
-
-  @media screen and (max-width: 480px) {
-    .form-item input{
-      display: block;
-      width: 300px;
-      height: 45px;
-      background: transparent;
-      border: solid 2px #ccc;
-      transition: all .3s ease;
-      border-radius: 5px;
-      padding: 0 15px
-    }
-
-    .img-intro {
-      width: 100px;
-    }
-
-    .zen-info {
-      height: 40vh;
-      padding: 4%;
-  }
-
-  .log-sec {
-    background-color: #10005d;height: 60vh;
-  }
-  }
+.log-sec {
+  background-color: #10005d;height: 60vh;
+}
+}

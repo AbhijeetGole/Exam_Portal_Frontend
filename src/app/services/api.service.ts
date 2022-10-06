@@ -81,6 +81,15 @@ export class ApiService {
       return res;
     })
   }
+  getUserInfo(){
+    const headers = new HttpHeaders({
+
+      'Content-Type': 'application/json',
+     'jwt':this.cookie.get('jwt')
+
+    });
+    return  this.http.get(environment.userUrl+'exam-portal/user/getuser',{ headers: headers })
+  }
   
 
 }
