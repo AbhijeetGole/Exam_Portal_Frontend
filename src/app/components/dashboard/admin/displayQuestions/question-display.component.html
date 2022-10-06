@@ -1,296 +1,166 @@
-<!-- <div class="container">
-  
-  <button type="button" class="btn btn-success btn-md ms-auto float-end me-2" (click)="logout()">Logout</button>
-</div> -->
 <div class="container">
-  <app-createbtn></app-createbtn>
-  <table class="table borderless">
-    <thead class="table-head">
-      <tr>
-        <th scope="col" class="text-center col-md-1">Sr No.</th>
-        <th scope="col" class="col-md-7">Questions</th>
-        <th scope="col" class="text-center col-md-2">Topic</th>
-        <th scope="col" class="text-center col-md-2">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr
-        *ngFor="
-          let question of questions
-            | paginate
-              : {
-                  itemsPerPage: tableSize,
-                  currentPage: page,
-                  totalItems: count
-                };
-          let i = index
-        "
-        class="table-data"
-      >
-        <td scope="row" class="text-center table-row align-middle">
-            {{ (page - 1) * tableSize + (i + 1) }}
-        </td>
-        <td class="align-middle table-row">{{ question.title }}</td>
-        <td class="text-center table-row align-middle">{{ question.type }}</td>
-        <td class="text-center table-row">
-          <button
-            class="btn updatebtn align-items-center"
-            placement="top"
-            ngbTooltip="Update Question"
-            data-bs-toggle="modal"
-            data-bs-target="#staticBackdropupdate"
-            #{{question._id}}
-            (click)="getQuestionById(question._id)"
-          >
-            <i class="bi bi-pencil-square"></i>
-          </button>
-          <button
-            class="btn deleteBtn"
-            placement="top"
-            ngbTooltip="Delete Question!"
-            #{{question._id}}
-            (click)="getQuestionById(question._id)"
-            data-bs-toggle="modal"
-            data-bs-target="#deletemodal"
-          >
-            <i class="bi bi-trash"></i>
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <div class="page-controls">
-    <pagination-controls
-      previousLabel="Prev"
-      nextLabel="Next"
-      (pageChange)="onTableDataChange($event)"
-    >
-    </pagination-controls>
-  </div>
+    <app-createbtn></app-createbtn>
+</div>
+<div class="container">
+    <table class="table table-hover table-striped">
+        <thead>
+            <tr>
+                <th scope="col" class="text-center">#</th>
+                <th scope="col">Question</th>
+                <th scope="col" class="text-center">Topic</th>
+                <th scope="col" class="text-center">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr
+                *ngFor="let question of questions | paginate : {itemsPerPage: tableSize, currentPage: page, totalItems: count}, let i=index">
+                <th scope="row" class="text-center align-middle">{{(page-1)*tableSize + (i+1)}}</th>
+                <td class="align-middle title">{{ question.title }}</td>
+                <td class="text-center align-middle">{{question.type}}</td>
+                <td class="text-center">
+                    <button class="btn btn-primary updatebtn align-items-center" placement="top"
+                        ngbTooltip="Update Question" data-bs-toggle="modal" data-bs-target="#staticBackdropupdate"
+                        #{{question._id}} (click)="getQuestionById(question._id)">
+                        <i class="bi bi-pencil-square"></i>
+                    </button>
+                    <button class="btn btn-danger" placement="top" ngbTooltip="Delete Question!" #{{question._id}}
+                        (click)="getQuestionById(question._id)" data-bs-toggle="modal" data-bs-target="#deletemodal">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="d-flex justify-content-center container">
+    <div class=" paginationDiv">
+        <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+        </pagination-controls>
+    </div>
 </div>
 
-<div
-  class="modal fade"
-  id="staticBackdropupdate"
-  data-bs-backdrop="static"
-  data-bs-keyboard="false"
-  tabindex="-1"
-  aria-labelledby="staticBackdropLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog modal-dialog-scrollable modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Update Question</h5>
-        <button
-          type="button"
-          class="close-btn"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ><i class="bi bi-x-lg"></i></button>
-      </div>
-      <div class="modal-body">
-        <form class="myForm text-center" name="formData" #updateQue="ngForm">
-          <div class="mb-3 form-floating">
-            <input
-              class="form-control"
-              placeholder="Question"
-              type="text"
-              #title
-              required
-              name="title"
-              value="{{ que.title }}"
-              [(ngModel)]="que.title"
-            />
-            <label for="emailid">Question</label>
-          </div>
-          <div class="mb-3 form-floating">
-            <select
-              #type
-              class="form-select"
-              name="type"
-              value="{{ que.type }}"
-              [(ngModel)]="que.type"
-            >
-              <option value="Node" selected>Node</option>
-              <option value="Java">Java</option>
-              <option value="Javascript">Javascript</option>
-              <option value="Angular">Angular</option>
-              <option value="Mongo">Mongo</option>
-              <option value="Spring">Spring</option>
-            </select>
-            <label for="type">Type</label>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="mb-3 form-floating">
-                <input
-                  class="form-control"
-                  type="text"
-                  #option1
-                  placeholder="Option 1"
-                  required
-                  value="{{ que.option1 }}"
-                  name="option1"
-                  [(ngModel)]="que.option1"
-                />
-                <label for="option1">Option 1</label>
-              </div>
+<div class="modal fade" id="staticBackdropupdate" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Update Question</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="col-md-6">
-              <div class="mb-3 form-floating">
-                <input
-                  class="form-control"
-                  type="text"
-                  #option2
-                  placeholder="Option 2"
-                  required
-                  value="{{ que.option2 }}"
-                  name="option2"
-                  [(ngModel)]="que.option2"
-                />
-                <label for="option1">Option 2</label>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="mb-3 form-floating">
-                <input
-                  class="form-control"
-                  type="text"
-                  #option1
-                  placeholder="Option 3"
-                  required
-                  value="{{ que.option3 }}"
-                  name="option3"
-                  [(ngModel)]="que.option3"
-                />
-                <label for="option3">Option 3</label>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="mb-3 form-floating">
-                <input
-                  class="form-control"
-                  type="text"
-                  #option1
-                  placeholder="Option 4"
-                  required
-                  value="{{ que.option4 }}"
-                  name="option4"
-                  [(ngModel)]="que.option4"
-                />
-                <label for="option4">Option 4</label>
-              </div>
-            </div>
-          </div>
-          <div class="mb-3 form-floating">
-            <select
-              #answer
-              class="form-select"
-              name="answer"
-              value="{{ que.answer }}"
-              [(ngModel)]="que.answer"
-            >
-              <option value="option1" selected>Option 1</option>
-              <option value="option2">Option 2</option>
-              <option value="option3">Option 3</option>
-              <option value="option4">Option 4</option>
-            </select>
-            <label for="option1">Correct Answer</label>
-          </div>
+            <div class="modal-body">
+                <form class="myForm text-center" name="formData" #updateQue="ngForm">
+                    <div class="mb-3 form-floating">
+                        <input class="form-control" placeholder="Question" type="text" #title required name="title"
+                            value={{que.title}} [(ngModel)]="que.title">
+                        <label for="emailid">Question</label>
+                    </div>
+                    <div class="mb-3 form-floating">
+                        <select #type class="form-select" name="type" value={{que.type}} [(ngModel)]="que.type">
+                            <option value="Node" selected>Node</option>
+                            <option value="Java">Java</option>
+                            <option value="Javascript">Javascript</option>
+                            <option value="Angular">Angular</option>
+                            <option value="Mongo">Mongo</option>
+                            <option value="Spring">Spring</option>
+                        </select>
+                        <label for="type">Type</label>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3 form-floating">
+                                <input class="form-control" type="text" #option1 placeholder="Option 1" required
+                                    value={{que.option1}} name="option1" [(ngModel)]="que.option1">
+                                <label for="option1">Option 1</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3 form-floating">
+                                <input class="form-control" type="text" #option2 placeholder="Option 2" required
+                                    value={{que.option2}} name="option2" [(ngModel)]="que.option2">
+                                <label for="option1">Option 2</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3 form-floating">
+                                <input class="form-control" type="text" #option1 placeholder="Option 3" required
+                                    value={{que.option3}} name="option3" [(ngModel)]="que.option3">
+                                <label for="option3">Option 3</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3 form-floating">
+                                <input class="form-control" type="text" #option1 placeholder="Option 4" required
+                                    value={{que.option4}} name="option4" [(ngModel)]="que.option4">
+                                <label for="option4">Option 4</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3 form-floating">
+                        <select #answer class="form-select" name="answer" value={{que.answer}} [(ngModel)]="que.answer">
+                            <option value="option1" selected>Option 1</option>
+                            <option value="option2">Option 2</option>
+                            <option value="option3">Option 3</option>
+                            <option value="option4">Option 4</option>
+                        </select>
+                        <label for="option1">Correct Answer</label>
+                    </div>
 
-          <div class="mb-3 form-floating">
-            <select
-              #difficultyLevel
-              class="form-select"
-              name="difficultyLevel"
-              placeholder="Difficulty"
-              [(ngModel)]="que.difficultyLevel"
-              value="{{ que.difficultyLevel }}"
-            >
-              <option value="easy" selected>Easy</option>
-              <option value="medium">Medium</option>
-              <option value="difficult">Difficult</option>
-            </select>
-            <label for="difficulty">Difficulty</label>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-closed" data-bs-dismiss="modal">
-          Close
-        </button>
-        <button
-          type="button"
-          class="btn btn-update"
-          data-bs-dismiss="modal"
-          (click)="updateQuestion(que._id, updateQue.value)"
-        >
-          Update
-        </button>
-      </div>
+                    <div class="mb-3 form-floating">
+                        <select #difficultyLevel class="form-select" name="difficultyLevel" placeholder="Difficulty"
+                            [(ngModel)]="que.difficultyLevel" value={{que.difficultyLevel}}>
+                            <option value="easy" selected>Easy</option>
+                            <option value="medium">Medium</option>
+                            <option value="difficult">Difficult</option>
+                        </select>
+                        <label for="difficultyLevel">Difficulty</label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal"
+                    (click)="updateQuestion(que._id, updateQue.value)">Update</button>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
 <div class="d-flex justify-content-center">
-  <div class="toast-container position-fixed top-0 p-3" *ngIf="showUpdateToast">
-    <ngb-toast class="bg-success text-light">
-      Question Updated Successfully
-    </ngb-toast>
-  </div>
-</div>
-
-<div
-  class="modal fade"
-  id="deletemodal"
-  data-bs-keyboard="false"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="modalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modalLabel">Delete Question</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
-      </div>
-      <div class="modal-body">
-        <form class="myForm text-center">Confirm Deletion?</form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-          No
-        </button>
-        <button
-          type="button"
-          class="btn btn-success"
-          data-bs-dismiss="modal"
-          (click)="deleteQuestion(que._id)"
-        >
-          Yes
-        </button>
-      </div>
+    <div class="toast-container position-fixed top-0 p-3" *ngIf="showUpdateToast">
+        <ngb-toast class="bg-success text-light">
+            Question Updated Successfully
+        </ngb-toast>
     </div>
-  </div>
 </div>
 
-<!-- <div class="container">
-  <app-createbtn></app-createbtn>
-</div> -->
+<div class="modal fade" id="deletemodal" data-bs-keyboard="false" tabindex="-1" role="dialog"
+    aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLabel">Delete Question</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="myForm text-center">
+                    Confirm Deletion?
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal"
+                    (click)="deleteQuestion(que._id)">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="d-flex justify-content-center">
-  <div class="toast-container position-fixed top-0 p-3" *ngIf="showDeleteToast">
-    <ngb-toast class="bg-danger text-light">
-      Question Deleted Successfully
-    </ngb-toast>
-  </div>
+    <div class="toast-container position-fixed top-0 p-3" *ngIf="showDeleteToast">
+        <ngb-toast class="bg-danger text-light">
+            Question Deleted Successfully
+        </ngb-toast>
+    </div>
 </div>

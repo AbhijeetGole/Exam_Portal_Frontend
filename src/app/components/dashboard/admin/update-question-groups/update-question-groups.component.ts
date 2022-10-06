@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { QuestionService } from 'src/app/services/question.service';
 import { QuestionGrpService } from 'src/app/services/question-grp.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { CookieService } from 'ngx-cookie-service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-update-question-groups',
@@ -12,25 +15,31 @@ export class UpdateQuestionGroupsComponent implements OnInit {
   id: any = '';
   questions: any[] = [];
   filteredQuestions: any[] = [];
-  checked:any[] = [];
+  checked: any[] = [];
   selectAll: boolean = false;
   QuestionGroup: any = {
-    name: '',
-    type: '',
+    title: '',
+    topic: '',
   };
+  uservalue: any;
 
-  constructor(private questionService: QuestionService, private questionGrpService: QuestionGrpService, 
-    private router: Router, private route: ActivatedRoute){}//, private questionGroupDisplay: QuestionGroupDisplayComponent) { }
+  constructor(private questionService: QuestionService, private questionGrpService: QuestionGrpService,
+    private router: Router, private route: ActivatedRoute, private cookie: CookieService, private http: HttpClient) { }//, private questionGroupDisplay: QuestionGroupDisplayComponent) { }
 
   ngOnInit(): void {
-    // this.questions = JSON.parse(localStorage.getItem("questions") || '[]');
-    // console.log(this.questions);  
-    // this.questionSharingService.selectedQuestions.subscribe((data) => {
-    //   this.questions = data;
-    // },
-    // (error) => {
-    //   console.log(error);
-    // });
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'jwt': this.cookie.get('jwt')
+    });
+
+    this.http.get(environment.userUrl + 'exam-portal/token/validate', { headers: headers, withCredentials: true })
+      .subscribe((data: any) => {
+        this.uservalue = data
+        if (this.uservalue != 'admin') {
+          alert("You are not LoggedIn")
+          this.router.navigate([''])
+        }
+      })
     this.getQuestions();
     this.id = this.route.snapshot.paramMap.get('id');
     this.getQuestionGroupById(this.id);
@@ -42,36 +51,29 @@ export class UpdateQuestionGroupsComponent implements OnInit {
         (response: any) => {
           this.questions = response;
           this.filteredQuestions = response;
-          // localStorage.setItem("questions", JSON.stringify(this.questions))
-          // this.questionSharingService.setQuestions(response);
         },
         (error: any) => {
           console.error('Request failed with error' + error);
         }
-    )
+      )
   }
 
-  getQuestionGroupById(id: any){
+  getQuestionGroupById(id: any) {
     this.questionGrpService.getQuestionGroupbyId(id).subscribe((response: any) => {
       this.checked = response.questionID;
-      this.QuestionGroup.name = response.name;
-      this.QuestionGroup.type = response.type;
+      this.QuestionGroup.title = response.title;
+      this.QuestionGroup.topic = response.topic;
     }, (error: any) => {
       console.log(error.message);
     })
   }
 
-  updateQuestionGroup(data:any){
-    console.log(data);
+  updateQuestionGroup(data: any) {
     let questionGroupUpdate = {
-      name: data.name,
-      type: data.type,
+      title: data.title,
+      topic: data.topic,
       questionID: this.checked
     }
-
-    console.log(this.id);
-    console.log(questionGroupUpdate);
-
     this.questionGrpService.updateQuestionGroup(this.id, questionGroupUpdate).subscribe((response: any) => {
       console.log('Question Group Updated Successfully!');
     }, (error) => {
@@ -80,58 +82,49 @@ export class UpdateQuestionGroupsComponent implements OnInit {
     this.router.navigate(['/question-group']);
   }
 
-  isChecked(id:any){
-    if(this.selectAll){
-
+  isChecked(id: any) {
+    if (this.selectAll) {
       this.checked = [];
       this.filteredQuestions.forEach(question => {
         this.checked.push(question._id);
       });
-
-      console.log(this.checked)
       return true;
     }
-
-      if(this.checked.indexOf(id) == -1){
-        return false;
-      }
-
+    if (this.checked.indexOf(id) == -1) {
+      return false;
+    }
     return true;
   }
 
-  onCheckChanged(e:any){
+  onCheckChanged(e: any) {
 
     let index = this.checked.indexOf(e.target.value);
     this.selectAll = false;
 
-    if(index == -1){
+    if (index == -1) {
       this.checked.push(e.target.value);
-    }else{
+    } else {
       this.checked.splice(index, 1);
     }
-
-    console.log(this.checked);
   }
 
-  onSelectAll(){
+  onSelectAll() {
     this.selectAll = !this.selectAll;
 
-    if(!this.selectAll){
+    if (!this.selectAll) {
       this.checked = [];
     }
-    // console.log(this.selectAll);
   }
 
-  getQuestionByTopic(data:any) {
-    // console.log(data);
+  getQuestionByTopic(data: any) {
     this.filteredQuestions = [];
-    if(data === 'All'){
+    if (data === 'All') {
       this.filteredQuestions = this.questions;
-    }else{
+    } else {
       this.questions.forEach(question => {
-          if(question.type === data){
-            this.filteredQuestions.push(question);
-          }
+        if (question.type === data) {
+          this.filteredQuestions.push(question);
+        }
       });
     }
   }

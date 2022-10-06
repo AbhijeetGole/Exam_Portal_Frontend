@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { QuestionService } from 'src/app/services/question.service';
 import { QuestionGrpService } from 'src/app/services/question-grp.service';
 import { Router } from '@angular/router';
-// import { QuestionGroupDisplayComponent } from '../displayQuestionGroups/question-group-display.component'; 
-// import { QuestionSharingService } from 'src/app/services/question-sharing.service';
-// import { SessionStorage, LocalStorage} from 'angular-web-storage';
+import { CookieService } from 'ngx-cookie-service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-creategrpform',
@@ -13,121 +13,109 @@ import { Router } from '@angular/router';
 })
 export class CreategrpformComponent implements OnInit {
 
-  // @SessionStorage() questions: any[] = [];
   questions: any[] = [];
   filteredQuestions: any[] = [];
-  checked:any[] = [];
+  checked: any[] = [];
   selectAll: boolean = false;
+  uservalue: any;
   QuestionGroup: any = {
     name: '',
-    type: '',
+    topic: '',
   };
 
-  constructor(private questionService: QuestionService, private questionGrpService: QuestionGrpService, private router: Router){}//, private questionGroupDisplay: QuestionGroupDisplayComponent) { }
+  constructor(private questionService: QuestionService, private http: HttpClient, private questionGrpService: QuestionGrpService, private router: Router, private cookie: CookieService) { }//, private questionGroupDisplay: QuestionGroupDisplayComponent) { }
 
   ngOnInit(): void {
-    // this.questions = JSON.parse(localStorage.getItem("questions") || '[]');
-    // console.log(this.questions);  
-    // this.questionSharingService.selectedQuestions.subscribe((data) => {
-    //   this.questions = data;
-    // },
-    // (error) => {
-    //   console.log(error);
-    // });
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'jwt': this.cookie.get('jwt')
+    });
+
+    this.http.get(environment.userUrl + 'exam-portal/token/validate', { headers: headers, withCredentials: true })
+      .subscribe((data: any) => {
+        this.uservalue = data
+        if (this.uservalue != 'admin') {
+          alert("You are not LoggedIn")
+          this.router.navigate([''])
+        }
+      })
     this.getQuestions()
   }
 
   getQuestions() {
-    // console.log('called');
     this.questionService.getAllQuestions()
       .subscribe(
         (response: any) => {
           this.questions = response;
           this.filteredQuestions = response;
-          // localStorage.setItem("questions", JSON.stringify(this.questions))
-          // this.questionSharingService.setQuestions(response);
         },
         (error: any) => {
           console.error('Request failed with error' + error);
         }
-    )
+      )
   }
 
-  createQuestionGroup(data:any){
+  createQuestionGroup(data: any) {
+    console.log(data);
     let questionGroupPost = {
-      name: data.name,
-      type: data.type,
+      title: data.title,
+      topic: data.topic,
       questionID: this.checked
     }
-
-    this.questionGrpService.createNewQuestionGroup(questionGroupPost).subscribe((res:any) => {
+    
+    console.log(questionGroupPost);
+    this.questionGrpService.createNewQuestionGroup(questionGroupPost).subscribe((res: any) => {
       console.log('question group created successfully!');
-      //this.questionGroupDisplay.getQuestionGroup();
     }, (error: any) => {
       console.log(error.message);
     })
 
     this.router.navigate(['/question-group']);
-
-    // this.questionService.createNewQuestion(data).subscribe((data: any) => {
-    //   this.showCreateToast = true;
-    //   this.formdisplay = !this.formdisplay;
-    //   this.display.getQuestions();
-    // })
   }
 
-  isChecked(id:any){
-    if(this.selectAll){
+  isChecked(id: any) {
+    if (this.selectAll) {
 
       this.checked = [];
       this.filteredQuestions.forEach(question => {
         this.checked.push(question._id);
       });
-
-      console.log(this.checked)
       return true;
     }
-
-      if(this.checked.indexOf(id) == -1){
-        return false;
-      }
-      
+    if (this.checked.indexOf(id) == -1) {
+      return false;
+    }
     return true;
   }
 
-  onCheckChanged(e:any){
+  onCheckChanged(e: any) {
 
     let index = this.checked.indexOf(e.target.value);
     this.selectAll = false;
 
-    if(index == -1){
+    if (index == -1) {
       this.checked.push(e.target.value);
-    }else{
+    } else {
       this.checked.splice(index, 1);
     }
-
-    console.log(this.checked);
   }
 
-  onSelectAll(){
+  onSelectAll() {
     this.selectAll = !this.selectAll;
-
-    if(!this.selectAll){
+    if (!this.selectAll) {
       this.checked = [];
     }
-    // console.log(this.selectAll);
   }
 
-  getQuestionByTopic(data:any) {
-    // console.log(data);
+  getQuestionByTopic(data: any) {
     this.filteredQuestions = [];
-    if(data === 'All'){
+    if (data === 'All') {
       this.filteredQuestions = this.questions;
-    }else{
+    } else {
       this.questions.forEach(question => {
-          if(question.type === data){
-            this.filteredQuestions.push(question);
-          }
+        if (question.type === data) {
+          this.filteredQuestions.push(question);
+        }
       });
     }
   }

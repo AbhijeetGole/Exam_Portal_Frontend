@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { QuestionService } from 'src/app/services/question.service';
 import { QuestionGrpService } from 'src/app/services/question-grp.service';
 import { Router } from '@angular/router';
-import { QuestionGroupDisplayComponent } from '../displayQuestionGroups/question-group-display.component'; 
 import { QuizService } from 'src/app/services/quiz.service';
+import { CookieService } from 'ngx-cookie-service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-create-quiz',
@@ -13,18 +15,31 @@ import { QuizService } from 'src/app/services/quiz.service';
 export class CreateQuizComponent implements OnInit {
 
   questionGroups: any[] = [];
-  //filteredQuestions: any[] = [];
-  checked:any[] = [];
+  checked: any[] = [];
   selectAll: boolean = false;
+  uservalue:any;
   Quiz: any = {
     title: '',
     description: '',
     duration: '15',
   };
 
-  constructor(private questionService: QuestionService, private questionGrpService: QuestionGrpService, private router: Router, private quizService: QuizService) { }
+  constructor(private questionService: QuestionService, private questionGrpService: QuestionGrpService, private router: Router, private quizService: QuizService, private cookie:CookieService, private http: HttpClient) { }
 
   ngOnInit(): void {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'jwt': this.cookie.get('jwt')
+    });
+
+    this.http.get(environment.userUrl + 'exam-portal/token/validate', { headers: headers, withCredentials: true })
+      .subscribe((data: any) => {
+        this.uservalue = data
+        if (this.uservalue != 'admin') {
+          alert("You are not LoggedIn")
+          this.router.navigate([''])
+        }
+      })
     this.getQuestionGroups()
   }
 
@@ -33,16 +48,14 @@ export class CreateQuizComponent implements OnInit {
       .subscribe(
         (response: any) => {
           this.questionGroups = response;
-          // localStorage.setItem("questions", JSON.stringify(this.questions))
-          // this.questionSharingService.setQuestions(response);
         },
         (error: any) => {
           console.error('Request failed with error' + error);
         }
-    )
+      )
   }
 
-  createQuiz(data:any){
+  createQuiz(data: any) {
     let quizPost = {
       title: data.title,
       description: data.description,
@@ -51,9 +64,8 @@ export class CreateQuizComponent implements OnInit {
       questionGroup: this.checked
     }
 
-    this.quizService.createQuiz(quizPost).subscribe((res:any) => {
+    this.quizService.createQuiz(quizPost).subscribe((res: any) => {
       console.log('question group created successfully!');
-      //this.questionGroupDisplay.getQuestionGroup()
     }, (error: any) => {
       console.log(error.message);
     })
@@ -61,21 +73,21 @@ export class CreateQuizComponent implements OnInit {
     this.router.navigate(['/quiz']);
   }
 
-  isChecked(id:any){
-      if(this.checked.indexOf(id) == -1){
-        return false;
-      }
+  isChecked(id: any) {
+    if (this.checked.indexOf(id) == -1) {
+      return false;
+    }
 
     return true;
   }
 
-  onCheckChanged(e:any){
+  onCheckChanged(e: any) {
 
     let index = this.checked.indexOf(e.target.value);
 
-    if(index == -1){
+    if (index == -1) {
       this.checked.push(e.target.value);
-    }else{
+    } else {
       this.checked.splice(index, 1);
     }
 

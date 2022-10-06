@@ -1,6 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap-icons/font/bootstrap-icons.css";
-
 html {
     margin: 0;
     padding: 0;
@@ -16,81 +15,6 @@ body {
     z-index: 1 !important;
 }
 
-.ngx-pagination .current {
-    background-color: #F0582E !important;
-}
-
-.create-btn {
-    margin-bottom: 1%;
-    color: white;
-    background-color: #F0582E;
-    font-weight: 600;
-    border: none;
-}
-
-.create-btn:hover {
-    background-color: #F0582E !important;
-    color: white !important;
-    border: none;
-}
-
-.table-head {
-    background: #9da8e1;
-    height: 50px;
-}
-
-thead tr th{
-    padding: 10px 0;
-}
-
-.table-row {
-    border: none;
-}
-
-/* -----------Table CSS-------------- */
-
-.modal-header {
-    background-color: #2a3889;
-    color: white;
-}
-
-.modal-footer {
-    background-color: #2a3889;
-}
-
-.close-btn {
-    color: white !important;
-    outline: none;
-    border: none;
-    background-color: transparent;
-}
-
-.btn-closed, .btn-closed:hover {
-    color: black;
-    background-color: white;
-}
-
-.btn-update, .btn-update:hover {
-    color: white;
-    background-color: #F0582E;
-}
-
-.updatebtn {
-    margin-right: 5px;
-    color: #2a3889;
-}
-
-.ngx-pagination .current {
-    background-color: #F0582E !important;
-}
-
-.deleteBtn {
-    color: #DC151F;
-}
-
-.page-controls {
-    position: fixed;
-    bottom: 10px;
-    left: 50%;
-    transform: translate(-50%, 0);
+ul {
+    padding-left: 0%;
 }

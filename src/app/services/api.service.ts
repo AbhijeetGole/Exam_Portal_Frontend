@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {Router } from '@angular/router';
 import { CookieService} from 'ngx-cookie-service';
 import { environment } from 'src/environments/environment';
@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environment';
 })
 export class ApiService {
   uservalue:any = [];
+  user: any = {};
   constructor(private http:HttpClient, private router: Router,private cookie:CookieService) { }
 
   registerUser(user:any){
@@ -18,19 +19,15 @@ export class ApiService {
       alert("Account Created! Please Login to Continue");
     })
   }
-
-  // { observe: 'response',withCredentials:true, responseType:'text' }
-
+  
   LoginUser(user:any){
     this.http.post(environment.userUrl+'exam-portal/user/authenticate',user).subscribe((res:any)=>{
     this.uservalue=res;   
-    // alert(this.uservalue.message) 
-    //console.log(res['token'])
-    this.cookie.set('jwt',res['token'])
-
-    if(this.uservalue.role=='admin'){
+      this.cookie.set('jwt',res.data.token)
+      this.user=this.uservalue.role.toString();
+     if(this.user=='admin'){
       this.router.navigate(['admin']);
-    }else if(this.uservalue.role=='user'){
+    }else if(this.user=='user'){
       this.router.navigate(['user']);
     }
     },(error:any)=>{
@@ -38,31 +35,50 @@ export class ApiService {
     })
     
   }
+
   logout(user:any){
-    this.http.delete<any>(environment.userUrl+'exam-portal/user/logout',user).subscribe((res:any)=>{
+    const headers = new HttpHeaders({
+
+      'Content-Type': 'application/json',
+     'jwt':this.cookie.get('jwt')
+
+    });
+    this.http.delete<any>(environment.userUrl+'exam-portal/user/logout',{ headers: headers }).subscribe((res:any)=>{
       console.log(res)
      
     })
   }
   Authenticate(){
-    this.http.get<any>(environment.userUrl+'exam-portal/token/validate').subscribe((res:any)=>{
+    const headers = new HttpHeaders({
+
+      'Content-Type': 'application/json',
+     'jwt':this.cookie.get('jwt')
+
+    });
+    this.http.get<any>(environment.userUrl+'exam-portal/token/validate',{ headers: headers }).subscribe((res:any)=>{
       console.log(res);
     })
   }
   CreateQue(user:any){
-    this.http.post<any>(environment.apiUrl+'question',user).subscribe((res:any)=>{
+    const headers = new HttpHeaders({
+
+      'Content-Type': 'application/json',
+     'jwt':this.cookie.get('jwt')
+
+    });
+    this.http.post<any>(environment.apiUrl+'question',{ headers: headers }).subscribe((res:any)=>{
       console.log(res)
-      // alert("Question Added Successfully")
-     
     })
   }
   SeeAllQue(){
-    this.http.get<any>(environment.apiUrl+'question').subscribe((res:any)=>{
-      // console.log(typeof res)
-      console.log(res)
+    const headers = new HttpHeaders({
+
+      'Content-Type': 'application/json',
+     'jwt':this.cookie.get('jwt')
+
+    });
+    this.http.get<any>(environment.apiUrl+'question',{ headers: headers }).subscribe((res:any)=>{
       return res;
-      // this.array=res;
-      // console.log(this.array)
     })
   }
   

@@ -1,450 +1,243 @@
-<div *ngIf="screenWidth > 700; px">
-  <div class="container">
-    <button
-      type="button"
-      class="create-btn mt-3 px-4 btn float-end"
-      data-bs-toggle="modal"
-      data-bs-target="#staticBackdrop"
-    >
-    <i class="bi bi-plus-lg"></i> Create 
-    </button>
-  </div>
-
-  <div
-    class="modal fade test"
-    id="staticBackdrop"
-    data-bs-backdrop="static"
-    data-bs-keyboard="false"
-    tabindex="-1"
-    aria-labelledby="staticBackdropLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog modal-dialog-scrollable modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="staticBackdropLabel">Create Question</h5>
-          <button
-            type="button"
-            class="close-btn"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ><i class="bi bi-x-lg"></i></button>
-        </div>
-        <div class="modal-body">
-          <form
-            class="myForm text-center"
-            name="formData"
-            #createQue="ngForm"
-            [formGroup]="userEmails"
-            (ngSubmit)="createQuestion(createQue.value)"
-          >
-            <div class="mb-3 form-floating">
-              <input
-                class="form-control"
-                placeholder="Question"
-                type="text"
-                #title
-                required
-                [(ngModel)]="Question.title"
-                name="title"
-                formControlName="title"
-              />
-              <label for="emailid">Question</label>
-              <div
-                class="form-text text-danger"
-                *ngIf="TITLE.errors?.['required'] && TITLE.touched"
-              >
-                This field is required
-              </div>
-            </div>
-            <div class="mb-3 form-floating">
-              <select
-                #type
-                class="form-select"
-                name="type"
-                [(ngModel)]="Question.type"
-                formControlName="type"
-              >
-                <option value="Node" selected>Node</option>
-                <option value="Java">Java</option>
-                <option value="Javascript">Javascript</option>
-                <option value="Angular">Angular</option>
-                <option value="Mongo">Mongo</option>
-                <option value="Spring">Spring</option>
-              </select>
-              <label for="type">Type</label>
-              <div
-                class="form-text text-danger"
-                *ngIf="TYPE.errors?.['required'] && TYPE.touched"
-              >
-                This field is required
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="mb-3 form-floating">
-                  <input
-                    class="form-control"
-                    type="text"
-                    #option1
-                    placeholder="Option 1"
-                    required
-                    [(ngModel)]="Question.option1"
-                    name="option1"
-                    formControlName="option1"
-                  />
-                  <label for="option1">Option 1</label>
-                  <div
-                    class="form-text text-danger"
-                    *ngIf="OPTION1.errors?.['required'] && OPTION1.touched"
-                  >
-                    This field is required
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="mb-3 form-floating">
-                  <input
-                    class="form-control"
-                    type="text"
-                    #option2
-                    placeholder="Option 2"
-                    required
-                    [(ngModel)]="Question.option2"
-                    name="option2"
-                    formControlName="option2"
-                  />
-                  <label for="option1">Option 2</label>
-                  <div
-                    class="form-text text-danger"
-                    *ngIf="OPTION2.errors?.['required'] && OPTION2.touched"
-                  >
-                    This field is required
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="mb-3 form-floating">
-                  <input
-                    class="form-control"
-                    type="text"
-                    #option1
-                    placeholder="Option 3"
-                    required
-                    [(ngModel)]="Question.option3"
-                    name="option3"
-                    formControlName="option3"
-                  />
-                  <label for="option3">Option 3</label>
-                  <div
-                    class="form-text text-danger"
-                    *ngIf="OPTION3.errors?.['required'] && OPTION3.touched"
-                  >
-                    This field is required
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="mb-3 form-floating">
-                  <input
-                    class="form-control"
-                    type="text"
-                    #option1
-                    placeholder="Option 4"
-                    required
-                    [(ngModel)]="Question.option4"
-                    name="option4"
-                    formControlName="option4"
-                  />
-                  <label for="option4">Option 4</label>
-                  <div
-                    class="form-text text-danger"
-                    *ngIf="OPTION4.errors?.['required'] && OPTION4.touched"
-                  >
-                    This field is required
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="mb-3 form-floating">
-              <select
-                #answer
-                class="form-select"
-                name="answer"
-                [(ngModel)]="Question.answer"
-                formControlName="answer"
-              >
-                <option value="option1" selected>Option 1</option>
-                <option value="option2">Option 2</option>
-                <option value="option3">Option 3</option>
-                <option value="option4">Option 4</option>
-              </select>
-              <label for="option1">Correct Answer</label>
-              <div
-                class="form-text text-danger"
-                *ngIf="ANSWER.errors?.['required'] && ANSWER.touched"
-              >
-                This field is required
-              </div>
-            </div>
-
-            <div class="mb-3 form-floating">
-              <select
-                #difficultyLevel
-                class="form-select"
-                name="difficultyLevel"
-                placeholder="Difficulty"
-                [(ngModel)]="Question.difficultyLevel"
-                formControlName="difficultyLevel"
-              >
-                <option value="easy" selected>Easy</option>
-                <option value="medium">Medium</option>
-                <option value="difficult">Difficult</option>
-              </select>
-              <label for="difficulty">Difficulty</label>
-              <div
-                class="form-text text-danger"
-                *ngIf="DIFFICULTYLEVEL.errors?.['required'] && DIFFICULTYLEVEL.touched"
-              >
-                This field is required
-              </div>
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-closed"
-            data-bs-dismiss="modal"
-          >
-            Close
-          </button>
-          <button
-            type="button"
-            class="btn btn-update"
-            data-bs-dismiss="modal"
-            (click)="createQuestion(createQue.value)"
-            [disabled]="userEmails.invalid"
-          >
-            Create
-          </button>
-        </div>
-      </div>
+<div *ngIf="screenWidth>700px">
+    <div class="container mt-3">
+        <button type="button" class="create-btn btn btn-success btn-md ms-auto float-end" data-bs-toggle="modal"
+            data-bs-target="#staticBackdrop">Create+</button>
     </div>
-  </div>
+
+    <div class="modal fade test" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Create Question</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="myForm text-center" name="formData" #createQue="ngForm" [formGroup]="userEmails"
+                        (ngSubmit)="createQuestion(createQue.value)">
+                        <div class="mb-3 form-floating">
+                            <input class="form-control" placeholder="Question" type="text" #title required
+                                [(ngModel)]="Question.title" name="title" formControlName="title">
+                            <label for="emailid">Question</label>
+                            <div class="form-text text-danger" *ngIf="TITLE.errors?.['required'] && TITLE.touched">
+                                This field is required
+                            </div>
+                        </div>
+                        <div class="mb-3 form-floating">
+                            <select #type class="form-select" name="type" [(ngModel)]="Question.type"
+                                formControlName="type">
+                                <option value="Node" selected>Node</option>
+                                <option value="Java">Java</option>
+                                <option value="Javascript">Javascript</option>
+                                <option value="Angular">Angular</option>
+                                <option value="Mongo">Mongo</option>
+                                <option value="Spring">Spring</option>
+                            </select>
+                            <label for="type">Type</label>
+                            <div class="form-text text-danger" *ngIf="TYPE.errors?.['required'] && TYPE.touched">
+                                This field is required
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3 form-floating">
+                                    <input class="form-control" type="text" #option1 placeholder="Option 1" required
+                                        [(ngModel)]="Question.option1" name="option1" formControlName="option1">
+                                    <label for="option1">Option 1</label>
+                                    <div class="form-text text-danger"
+                                        *ngIf="OPTION1.errors?.['required'] && OPTION1.touched">
+                                        This field is required
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3 form-floating">
+                                    <input class="form-control" type="text" #option2 placeholder="Option 2" required
+                                        [(ngModel)]="Question.option2" name="option2" formControlName="option2">
+                                    <label for="option1">Option 2</label>
+                                    <div class="form-text text-danger"
+                                        *ngIf="OPTION2.errors?.['required'] && OPTION2.touched">
+                                        This field is required
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3 form-floating">
+                                    <input class="form-control" type="text" #option1 placeholder="Option 3" required
+                                        [(ngModel)]="Question.option3" name="option3" formControlName="option3">
+                                    <label for="option3">Option 3</label>
+                                    <div class="form-text text-danger"
+                                        *ngIf="OPTION3.errors?.['required'] && OPTION3.touched">
+                                        This field is required
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3 form-floating">
+                                    <input class="form-control" type="text" #option1 placeholder="Option 4" required
+                                        [(ngModel)]="Question.option4" name="option4" formControlName="option4">
+                                    <label for="option4">Option 4</label>
+                                    <div class="form-text text-danger"
+                                        *ngIf="OPTION4.errors?.['required'] && OPTION4.touched">
+                                        This field is required
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3 form-floating">
+                            <select #answer class="form-select" name="answer" [(ngModel)]="Question.answer"
+                                formControlName="answer">
+                                <option value="option1" selected>Option 1</option>
+                                <option value="option2">Option 2</option>
+                                <option value="option3">Option 3</option>
+                                <option value="option4">Option 4</option>
+                            </select>
+                            <label for="option1">Correct Answer</label>
+                            <div class="form-text text-danger" *ngIf="ANSWER.errors?.['required'] && ANSWER.touched">
+                                This field is required
+                            </div>
+                        </div>
+
+                        <div class="mb-3 form-floating">
+                            <select #difficultyLevel class="form-select" name="difficultyLevel" placeholder="Difficulty"
+                                [(ngModel)]="Question.difficultyLevel" formControlName="difficultyLevel">
+                                <option value="easy" selected>Easy</option>
+                                <option value="medium">Medium</option>
+                                <option value="difficult">Difficult</option>
+                            </select>
+                            <label for="difficulty">Difficulty</label>
+                            <div class="form-text text-danger"
+                                *ngIf="DIFFICULTYLEVEL.errors?.['required'] && DIFFICULTYLEVEL.touched">
+                                This field is required
+                            </div>
+
+                        </div>
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success" data-bs-dismiss="modal"
+                        (click)="createQuestion(createQue.value)" [disabled]="userEmails.invalid">Create</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-<div *ngIf="screenWidth < 700; px">
-  <div class="container mt-3">
-    <button
-      type="button"
-      class="create-btn btn btn-success btn-md ms-auto float-end"
-      (click)="formDisplay()"
-      *ngIf="!formdisplay"
-    >
-      Create+
-    </button>
-  </div>
-  <div class="container mt-3 mb-3" *ngIf="formdisplay">
-    <form
-      class="myForm text-center"
-      name="formData"
-      #createQue="ngForm"
-      [formGroup]="userEmails"
-      (ngSubmit)="createQuestion(createQue.value)"
-    >
-      <div class="mb-3 form-floating">
-        <input
-          class="form-control"
-          placeholder="Question"
-          type="text"
-          #title
-          required
-          [(ngModel)]="Question.title"
-          name="title"
-          formControlName="title"
-        />
-        <label for="emailid">Question</label>
-        <div
-          class="form-text text-danger"
-          *ngIf="TITLE.errors?.['required'] && TITLE.touched"
-        >
-          This field is required
-        </div>
-      </div>
-      <div class="mb-3 form-floating">
-        <select
-          #type
-          class="form-select"
-          name="type"
-          [(ngModel)]="Question.type"
-          formControlName="type"
-        >
-          <option value="Node" selected>Node</option>
-          <option value="Java">Java</option>
-          <option value="Javascript">Javascript</option>
-          <option value="Angular">Angular</option>
-          <option value="Mongo">Mongo</option>
-          <option value="Spring">Spring</option>
-        </select>
-        <label for="type">Type</label>
-        <div
-          class="form-text text-danger"
-          *ngIf="TYPE.errors?.['required'] && TYPE.touched"
-        >
-          This field is required
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6">
-          <div class="mb-3 form-floating">
-            <input
-              class="form-control"
-              type="text"
-              #option1
-              placeholder="Option 1"
-              required
-              [(ngModel)]="Question.option1"
-              name="option1"
-              formControlName="option1"
-            />
-            <label for="option1">Option 1</label>
-            <div
-              class="form-text text-danger"
-              *ngIf="OPTION1.errors?.['required'] && OPTION1.touched"
-            >
-              This field is required
+<div *ngIf="screenWidth<700px">
+    <div class="container mt-3">
+        <button type="button" class="create-btn btn btn-success btn-md ms-auto float-end" (click)="formDisplay()"
+            *ngIf="!formdisplay">Create+</button>
+    </div>
+    <div class="container mt-3 mb-3" *ngIf="formdisplay">
+        <form class="myForm text-center" name="formData" #createQue="ngForm" [formGroup]="userEmails"
+            (ngSubmit)="createQuestion(createQue.value)">
+            <div class="mb-3 form-floating">
+                <input class="form-control" placeholder="Question" type="text" #title required
+                    [(ngModel)]="Question.title" name="title" formControlName="title">
+                <label for="emailid">Question</label>
+                <div class="form-text text-danger" *ngIf="TITLE.errors?.['required'] && TITLE.touched">
+                    This field is required
+                </div>
             </div>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="mb-3 form-floating">
-            <input
-              class="form-control"
-              type="text"
-              #option2
-              placeholder="Option 2"
-              required
-              [(ngModel)]="Question.option2"
-              name="option2"
-              formControlName="option2"
-            />
-            <label for="option1">Option 2</label>
-            <div
-              class="form-text text-danger"
-              *ngIf="OPTION2.errors?.['required'] && OPTION2.touched"
-            >
-              This field is required
+            <div class="mb-3 form-floating">
+                <select #type class="form-select" name="type" [(ngModel)]="Question.type" formControlName="type">
+                    <option value="Node" selected>Node</option>
+                    <option value="Java">Java</option>
+                    <option value="Javascript">Javascript</option>
+                    <option value="Angular">Angular</option>
+                    <option value="Mongo">Mongo</option>
+                    <option value="Spring">Spring</option>
+                </select>
+                <label for="type">Type</label>
+                <div class="form-text text-danger" *ngIf="TYPE.errors?.['required'] && TYPE.touched">
+                    This field is required
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6">
-          <div class="mb-3 form-floating">
-            <input
-              class="form-control"
-              type="text"
-              #option1
-              placeholder="Option 3"
-              required
-              [(ngModel)]="Question.option3"
-              name="option3"
-              formControlName="option3"
-            />
-            <label for="option3">Option 3</label>
-            <div
-              class="form-text text-danger"
-              *ngIf="OPTION3.errors?.['required'] && OPTION3.touched"
-            >
-              This field is required
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3 form-floating">
+                        <input class="form-control" type="text" #option1 placeholder="Option 1" required
+                            [(ngModel)]="Question.option1" name="option1" formControlName="option1">
+                        <label for="option1">Option 1</label>
+                        <div class="form-text text-danger" *ngIf="OPTION1.errors?.['required'] && OPTION1.touched">
+                            This field is required
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3 form-floating">
+                        <input class="form-control" type="text" #option2 placeholder="Option 2" required
+                            [(ngModel)]="Question.option2" name="option2" formControlName="option2">
+                        <label for="option1">Option 2</label>
+                        <div class="form-text text-danger" *ngIf="OPTION2.errors?.['required'] && OPTION2.touched">
+                            This field is required
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="mb-3 form-floating">
-            <input
-              class="form-control"
-              type="text"
-              #option1
-              placeholder="Option 4"
-              required
-              [(ngModel)]="Question.option4"
-              name="option4"
-              formControlName="option4"
-            />
-            <label for="option4">Option 4</label>
-            <div
-              class="form-text text-danger"
-              *ngIf="OPTION4.errors?.['required'] && OPTION4.touched"
-            >
-              This field is required
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3 form-floating">
+                        <input class="form-control" type="text" #option1 placeholder="Option 3" required
+                            [(ngModel)]="Question.option3" name="option3" formControlName="option3">
+                        <label for="option3">Option 3</label>
+                        <div class="form-text text-danger" *ngIf="OPTION3.errors?.['required'] && OPTION3.touched">
+                            This field is required
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3 form-floating">
+                        <input class="form-control" type="text" #option1 placeholder="Option 4" required
+                            [(ngModel)]="Question.option4" name="option4" formControlName="option4">
+                        <label for="option4">Option 4</label>
+                        <div class="form-text text-danger" *ngIf="OPTION4.errors?.['required'] && OPTION4.touched">
+                            This field is required
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <div class="mb-3 form-floating">
-        <select
-          #answer
-          class="form-select"
-          name="answer"
-          [(ngModel)]="Question.answer"
-          formControlName="answer"
-        >
-          <option value="option1" selected>Option 1</option>
-          <option value="option2">Option 2</option>
-          <option value="option3">Option 3</option>
-          <option value="option4">Option 4</option>
-        </select>
-        <label for="option1">Correct Answer</label>
-        <div
-          class="form-text text-danger"
-          *ngIf="ANSWER.errors?.['required'] && ANSWER.touched"
-        >
-          This field is required
-        </div>
-      </div>
+            <div class="mb-3 form-floating">
+                <select #answer class="form-select" name="answer" [(ngModel)]="Question.answer"
+                    formControlName="answer">
+                    <option value="option1" selected>Option 1</option>
+                    <option value="option2">Option 2</option>
+                    <option value="option3">Option 3</option>
+                    <option value="option4">Option 4</option>
+                </select>
+                <label for="option1">Correct Answer</label>
+                <div class="form-text text-danger" *ngIf="ANSWER.errors?.['required'] && ANSWER.touched">
+                    This field is required
+                </div>
+            </div>
 
-      <div class="mb-3 form-floating">
-        <select
-          #difficultyLevel
-          class="form-select"
-          name="difficultyLevel"
-          placeholder="Difficulty"
-          [(ngModel)]="Question.difficultyLevel"
-          formControlName="difficultyLevel"
-        >
-          <option value="easy" selected>Easy</option>
-          <option value="medium">Medium</option>
-          <option value="difficult">Difficult</option>
-        </select>
-        <label for="difficulty">Difficulty</label>
-        <div
-          class="form-text text-danger"
-          *ngIf="DIFFICULTYLEVEL.errors?.['required'] && DIFFICULTYLEVEL.touched"
-        >
-          This field is required
-        </div>
-      </div>
-      <button
-        type="button"
-        class="btn btn-success"
-        data-bs-dismiss="modal"
-        (click)="createQuestion(createQue.value)"
-        [disabled]="userEmails.invalid"
-      >
-        Create
-      </button>
-    </form>
-  </div>
+            <div class="mb-3 form-floating">
+                <select #difficultyLevel class="form-select" name="difficultyLevel" placeholder="Difficulty"
+                    [(ngModel)]="Question.difficultyLevel" formControlName="difficultyLevel">
+                    <option value="easy" selected>Easy</option>
+                    <option value="medium">Medium</option>
+                    <option value="difficult">Difficult</option>
+                </select>
+                <label for="difficulty">Difficulty</label>
+                <div class="form-text text-danger"
+                    *ngIf="DIFFICULTYLEVEL.errors?.['required'] && DIFFICULTYLEVEL.touched">
+                    This field is required
+                </div>
+            </div>
+            <button type="button" class="btn btn-success" data-bs-dismiss="modal"
+                (click)="createQuestion(createQue.value)" [disabled]="userEmails.invalid">Create</button>
+        </form>
+    </div>
 </div>
 
 <div class="d-flex justify-content-center">
-  <div class="toast-container position-fixed top-0 p-3" *ngIf="showCreateToast">
-    <ngb-toast class="bg-success text-light">
-      Question Created Successfully
-    </ngb-toast>
-  </div>
+    <div class="toast-container position-fixed top-0 p-3" *ngIf="showCreateToast">
+        <ngb-toast class="bg-success text-light">
+            Question Created Successfully
+        </ngb-toast>
+    </div>
 </div>

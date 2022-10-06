@@ -1,14 +1,13 @@
 .sidenav {
     position: absolute;
-    background: #2a3889;
+    background: #263238;
     transition: all 0.5s ease;
     position: fixed;
+    z-index: 1;
     top: 4rem;
     width: 16.5625rem;
     height: calc(100% - 4rem);
-}
-.navbar {
-    background-color: #2a3889;
+    box-shadow: 0.063rem 0 1.25rem 0 #8690a3;
 }
 
 .logo-container {
@@ -79,7 +78,7 @@
     height: 3rem;
     color: #f3f3f3;
     text-decoration: none;
-    transition: color 0.5s ease;
+    transition: color 0.3s ease;
     border-radius: 0.45rem;
 }
 
@@ -114,17 +113,7 @@
 }
 
 nav {
+    background: #263238;
     width: 100%;
     height: 4rem;
-}
-
-.logout-btn {
-    background-color: #9da8e1;
-    color: black;
-    font-weight: 800;
-}
-
-.logout-btn:hover {
-    background-color: white;
-    color: #000;
 }

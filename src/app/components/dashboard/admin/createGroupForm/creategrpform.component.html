@@ -6,29 +6,28 @@
         <div class="row">
             <div class="col-md-4 mb-3">
                 <div class="form-floating">
-                    <input type="text" [(ngModel)]="QuestionGroup.name" class="form-control" #name name="name">
-                <label for="name">Title</label>
+                    <input type="text" [(ngModel)]="QuestionGroup.title" class="form-control" #title name="title">
+                    <label for="title">Title</label>
                 </div>
             </div>
             <div class="col-md-4 mb-3">
                 <div class="form-floating">
-                    <!-- <label for="type">Type</label> -->
-                <select #topic class="form-select" name="type"
-                    (change)="getQuestionByTopic(topic.value)">
-                    <option value="All" selected>All</option>
-                    <option value="Node">Node</option>
-                    <option value="Java">Java</option>
-                    <option value="Javascript">Javascript</option>
-                    <option value="Angular">Angular</option>
-                    <option value="Mongo">Mongo</option>
-                    <option value="Spring">Spring</option>
-                </select>
+                    <select #type class="form-select" name="type" (change)="getQuestionByTopic(type.value)">
+                        <option value="All" selected>All</option>
+                        <option value="Node">Node</option>
+                        <option value="Java">Java</option>
+                        <option value="Javascript">Javascript</option>
+                        <option value="Angular">Angular</option>
+                        <option value="Mongo">Mongo</option>
+                        <option value="Spring">Spring</option>
+                    </select>
+                    <label for="type">Type</label>
                 </div>
             </div>
             <div class="col-md-4 mb-3">
                 <div class="form-floating">
-                    <input type="text" [(ngModel)]="QuestionGroup.type" class="form-control" #type name="type">
-                <label for="type">Topic</label>
+                    <input type="text" [(ngModel)]="QuestionGroup.topic" class="form-control" #topic name="topic">
+                    <label for="topic">Topic</label>
                 </div>
             </div>
         </div>
@@ -41,8 +40,8 @@
                 <th scope="col" class="text-center">#</th>
                 <th scope="col">Questions</th>
                 <th scope="col" class="text-center">Topic</th>
-                <th scope="col" class="text-center">Select <input type="checkbox" 
-                     [checked]="selectAll" (change)="onSelectAll()"></th>
+                <th scope="col" class="text-center">Select <input type="checkbox" [checked]="selectAll"
+                        (change)="onSelectAll()"></th>
             </tr>
         </thead>
         <tbody>
