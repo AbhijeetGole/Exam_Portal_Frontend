@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
@@ -14,19 +14,20 @@ export class QuizdisplayComponent implements OnInit {
   constructor(private cookie:CookieService, private router:Router,private http:HttpClient) { }
  uservalue:any
   ngOnInit(): void {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'jwt': this.cookie.get('jwt')
-    });
+    this.http.get(environment.userUrl+"exam-portal/token/validate",{ observe: 'response', withCredentials:true,responseType:'text'})
 
-    this.http.get(environment.userUrl + 'exam-portal/token/validate', { headers: headers, withCredentials: true })
-      .subscribe((data: any) => {
-        this.uservalue = data
-        if (this.uservalue != 'user') {
-          alert("You are not LoggedIn")
-          this.router.navigate([''])
-        }
-      })
+    .subscribe((data:any)=>{
+    this.uservalue=data
+    if(this.uservalue.body!="user")
+     {
+      alert("You are not LoggedIn")
+      this.router.navigate([''])
+     }
+
+    },(error:any)=>{
+      alert("You are not LoggedIn")
+      this.router.navigate([''])
+    })
   }
 
   logout() {
