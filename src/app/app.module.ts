@@ -27,6 +27,10 @@ import { CreateQuizComponent } from './components/dashboard/admin/create-quiz/cr
 import { UpdateQuizComponent } from './components/dashboard/admin/update-quiz/update-quiz.component';
 
 import { QuizdisplayComponent } from './components/dashboard/user/displayQuiz/quizdisplay.component';
+import { SidenavbarUserComponent } from './components/dashboard/user/sidenavbar-user/sidenavbar-user.component';
+import { DashboardComponent } from './components/dashboard/user/dashboard/dashboard.component';
+import { ProfileComponent } from './components/dashboard/user/profile/profile.component';
+import { QuizPageComponent } from './components/dashboard/user/quiz-page/quiz-page.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +49,11 @@ import { QuizdisplayComponent } from './components/dashboard/user/displayQuiz/qu
     HeaderComponent,
     SideNavbarComponent,
     AdminHomeComponent,
-    BodyComponent
+    BodyComponent,
+    SidenavbarUserComponent,
+    DashboardComponent,
+    ProfileComponent,
+    QuizPageComponent
   ],
   imports: [
     BrowserModule,

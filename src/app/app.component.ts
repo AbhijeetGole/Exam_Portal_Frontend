@@ -16,12 +16,16 @@ export class AppComponent implements OnInit{
   title = 'exam_portal_ui';
   router: string;
   render = false;
+  role:any;
   
   constructor(private _router: Router) {
     this.router = _router.url;
+   
   }
   ngOnInit(): void {
     // console.log(environment.apiUrl)
+    this.role=localStorage.getItem("role")
+    console.log(this.role)
   }
   isSideNavCollapsed = false;
   screenWidth = 0;
@@ -34,4 +38,7 @@ export class AppComponent implements OnInit{
   isLanding(){
     return this._router.url === "/";
   }
+  QuizPage(){
+    return this._router.url==="/quizPage";
+   }
 }

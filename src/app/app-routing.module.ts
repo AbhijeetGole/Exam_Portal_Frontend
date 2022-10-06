@@ -10,6 +10,9 @@ import { DisplayQuizComponent } from './components/dashboard/admin/display-quiz/
 import { UpdateQuestionGroupsComponent } from './components/dashboard/admin/update-question-groups/update-question-groups.component';
 import { CreateQuizComponent } from './components/dashboard/admin/create-quiz/create-quiz.component';
 import { UpdateQuizComponent } from './components/dashboard/admin/update-quiz/update-quiz.component';
+import { DashboardComponent } from './components/dashboard/user/dashboard/dashboard.component';
+import { ProfileComponent } from './components/dashboard/user/profile/profile.component';
+import { QuizPageComponent } from './components/dashboard/user/quiz-page/quiz-page.component';
 
 const routes: Routes = [
   {
@@ -51,6 +54,18 @@ const routes: Routes = [
   {
     path: 'quiz/updatequiz/:id',
     component: UpdateQuizComponent
+  },
+  {
+    path:'quizUser',
+    component:DashboardComponent
+  },
+  {
+    path:'profile',
+    component:ProfileComponent
+  },
+  {
+    path:'quizPage',
+    component:QuizPageComponent
   }
 ];
 

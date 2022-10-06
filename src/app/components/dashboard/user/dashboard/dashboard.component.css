@@ -1,0 +1,22 @@
+/* .container{
+    display: block;
+    border-radius: 1%;
+    float: right;
+} */
+
+.main-dash {
+    height: 100vh;
+    width: 100%;
+}
+
+.background {
+    background:#9da8e1;
+    padding: 5%;
+}
+
+
+.quiz-btn, .quiz-btn:hover {
+    color: white;
+    background: #2a3889;
+}
+

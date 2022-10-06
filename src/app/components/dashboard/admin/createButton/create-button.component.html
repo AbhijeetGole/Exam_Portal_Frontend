@@ -89,10 +89,10 @@
                         <div class="mb-3 form-floating">
                             <select #answer class="form-select" name="answer" [(ngModel)]="Question.answer"
                                 formControlName="answer">
-                                <option value="option1" selected>Option 1</option>
-                                <option value="option2">Option 2</option>
-                                <option value="option3">Option 3</option>
-                                <option value="option4">Option 4</option>
+                                <option value="Question.option1">{{Question.option1}}</option>
+                                <option value="Question.option2">{{Question.option2}}</option>
+                                <option value="Question.option3">{{Question.option3}}</option>
+                                <option value="Question.option4">{{Question.option4}}</option>
                             </select>
                             <label for="option1">Correct Answer</label>
                             <div class="form-text text-danger" *ngIf="ANSWER.errors?.['required'] && ANSWER.touched">
@@ -204,10 +204,10 @@
             <div class="mb-3 form-floating">
                 <select #answer class="form-select" name="answer" [(ngModel)]="Question.answer"
                     formControlName="answer">
-                    <option value="option1" selected>Option 1</option>
-                    <option value="option2">Option 2</option>
-                    <option value="option3">Option 3</option>
-                    <option value="option4">Option 4</option>
+                    <option value="Question.option1">{{Question.option1}}</option>
+                    <option value="Question.option2">{{Question.option2}}</option>
+                    <option value="Question.option3">{{Question.option3}}</option>
+                    <option value="Question.option4">{{Question.option4}}</option>
                 </select>
                 <label for="option1">Correct Answer</label>
                 <div class="form-text text-danger" *ngIf="ANSWER.errors?.['required'] && ANSWER.touched">

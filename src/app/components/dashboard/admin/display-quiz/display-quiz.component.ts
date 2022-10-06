@@ -31,6 +31,7 @@ export class DisplayQuizComponent implements OnInit {
     private questionSharingService: QuestionSharingService, 
     private updateDeletedQuestionGroupService: UpdateDeletedQuestionGroupService) { 
       this.screenWidth = window.innerWidth;
+      
     }
 
   ngOnInit(): void {
@@ -76,6 +77,7 @@ export class DisplayQuizComponent implements OnInit {
           console.log('response received');
           console.log(response);
           this.quizzes = response;
+          localStorage.setItem("quizzes",this.quizzes[0]['title'])
         },
         (error: any) => {
           console.error('Request failed with error' + error.message);

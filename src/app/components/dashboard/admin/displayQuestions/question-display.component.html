@@ -99,10 +99,10 @@
                     </div>
                     <div class="mb-3 form-floating">
                         <select #answer class="form-select" name="answer" value={{que.answer}} [(ngModel)]="que.answer">
-                            <option value="option1" selected>Option 1</option>
-                            <option value="option2">Option 2</option>
-                            <option value="option3">Option 3</option>
-                            <option value="option4">Option 4</option>
+                            <option value="que.option1">{{que.option1}}</option>
+                                <option value="que.option2">{{que.option2}}</option>
+                                <option value="que.option3">{{que.option3}}</option>
+                                <option value="que.option4">{{que.option4}}</option>
                         </select>
                         <label for="option1">Correct Answer</label>
                     </div>

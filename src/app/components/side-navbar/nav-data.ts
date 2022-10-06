@@ -20,4 +20,9 @@ export const navBarData = [
         icon: 'bi bi-check-square-fill',
         label: 'Quiz'
     }
+    // ,{
+    //     routerLink: 'quiz',
+    //     icon: 'bi bi-check-square-fill',
+    //     label: 'QuizDisplay'
+    // }
 ];

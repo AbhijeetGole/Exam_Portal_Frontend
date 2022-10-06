@@ -9,7 +9,7 @@
 </nav>
 <div class="d-flex sidenav flex-column" [ngClass]="collapsed ? 'sidenav-collapsed' : ''">
 
-  <ul class="sidenav-nav d-flex flex-column mb-auto" *ngIf="role==='admin'">
+  <ul class="sidenav-nav d-flex flex-column mb-auto">
     <li class="sidenav-nav-item" *ngFor="let data of navData">
       <a class="sidenav-nav-link" [routerLink]="[data.routerLink]" routerLinkActive="active" (click)="toggleCollapse()"
         [routerLinkActiveOptions]="{exact: true}">
