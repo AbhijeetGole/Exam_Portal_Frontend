@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Router } from '@angular/router';
-
-import { ApiService } from 'src/app/services/api.service';
 import { QuestionService } from 'src/app/services/question.service';
+import { ApiService } from 'src/app/services/api.service';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { QuestionSharingService } from '../../../../services/question-sharing.service';
+// import { SessionStorage, LocalStorage } from 'angular-web-storage'
 import { environment } from 'src/environments/environment';
-import { UpdateDeletedQuestionService } from 'src/app/services/update-deleted-question.service';
 
 @Component({
   selector: 'app-question-display',
@@ -16,13 +15,13 @@ import { UpdateDeletedQuestionService } from 'src/app/services/update-deleted-qu
 })
 
 export class QuestionDisplayComponent implements OnInit {
-  user: any = {};
+
   questions: any[] = [];
   que: any = {};
   screenWidth: any;
   deleteQueId: any;
   showUpdateToast = false;
-  showDeleteToast = false;
+  showDeleteToast =false;
   uservalue: any;
   page: number = 1;
   count: number = 0;
@@ -30,55 +29,48 @@ export class QuestionDisplayComponent implements OnInit {
 
   constructor(private questionService: QuestionService, private apiSerive: ApiService,
     private http: HttpClient, private router: Router, private cookie: CookieService,
-    private questionSharingService: QuestionSharingService,
-    private updateDeletedQuestionService: UpdateDeletedQuestionService) {
+    private questionSharingService: QuestionSharingService) {
     this.screenWidth = window.innerWidth;
   }
 
   ngOnInit(): void {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'jwt': this.cookie.get('jwt')
-    });
+    this.http.get(environment.userUrl+"exam-portal/token/validate", { observe: 'response', withCredentials: true, responseType: 'text' })
 
-    this.http.get(environment.userUrl + 'exam-portal/token/validate', { headers: headers, withCredentials: true })
       .subscribe((data: any) => {
         this.uservalue = data
-        if (this.uservalue != 'admin') {
+        if (this.uservalue.body != "admin") {
           alert("You are not LoggedIn")
           this.router.navigate([''])
         }
       })
 
     this.getQuestions();
-
-    if(this.screenWidth<378){
-      this.tableSize = 4;
-    }
-    if(this.screenWidth>378 && this.screenWidth<480){
-      this.tableSize = 6;
-    }
-    if(this.screenWidth>480){
-      this.tableSize = 7;
-    }
   }
 
   getQuestions() {
+    // console.log('called');
     this.questionService.getAllQuestions()
       .subscribe(
         (response: any) => {
           this.questions = response;
+          // localStorage.setItem("questions", JSON.stringify(this.questions))
+          // this.questionSharingService.setQuestions(response);
         },
         (error: any) => {
           console.error('Request failed with error' + error);
         }
-      )
+    )
+  }
+
+  show(id: any) {
+    // console.log(id)
   }
 
   deleteQuestion(id: any) {
+    // console.log(id);
     this.showDeleteToast = false;
     this.questionService.deleteQuestion(id).subscribe((res: any) => {
-      this.updateDeletedQuestionService.setDeletedQuestionId(id)
+      // console.log(res)
       this.showDeleteToast = true;
       this.getQuestions();
     })
@@ -97,6 +89,7 @@ export class QuestionDisplayComponent implements OnInit {
       .subscribe(
         (response: any) => {
           this.que = response;
+          // console.log("clicked")
         },
         (error: any) => {
           console.error('Request failed with error' + error);
@@ -104,12 +97,17 @@ export class QuestionDisplayComponent implements OnInit {
       )
   }
 
+  logout() {
+    this.cookie.delete('jwt');
+    this.router.navigate(['']);
+  }
+
   onTableDataChange(event: any) {
     this.page = event;
     this.getQuestions();
   }
 
-  onTableSizeChange(event: any): void {
+  onTableSizeChange(event:any): void {
     this.tableSize = event.target.value;
     this.page = 1;
     this.getQuestions();

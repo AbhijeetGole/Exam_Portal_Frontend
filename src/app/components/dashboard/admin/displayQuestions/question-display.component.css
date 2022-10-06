@@ -1,15 +1,12 @@
-.updatebtn {
-    margin-right: 5px;
-}
-
 .toast-container {
     z-index: 1200;
     top: 10%;
 }
 
-.title{
-    word-break: break-all;
-}
+/* -----------Table CSS-------------- */
+
+
+
 
 @media screen and (max-width: 992px) { 
     .updatebtn {

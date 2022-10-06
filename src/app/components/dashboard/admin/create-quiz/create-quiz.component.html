@@ -19,7 +19,6 @@
                     <option value="60">1 hr</option>
                     <option value="120">2 hr</option>
                 </select>
-                <label for="duration">Duration</label>
                 </div>
             </div>
             <div class="col-md-4 mb-3">
@@ -45,8 +44,8 @@
         <tbody>
             <tr *ngFor="let questionGroup of questionGroups, let i=index">
                 <th scope="row" class="text-center align-middle">{{ i+1 }}</th>
-                <td class="align-middle">{{ questionGroup.title }}</td>
-                <td class="text-center align-middle">{{ questionGroup.topic }}</td>
+                <td class="align-middle">{{ questionGroup.name }}</td>
+                <td class="text-center align-middle">{{ questionGroup.type }}</td>
                 <td class="text-center align-middle">{{ questionGroup.questionID.length }}</td>
                 <td class="text-center"><input type="checkbox" [value]=questionGroup._id id={{questionGroup._id}}
                         [checked]="isChecked(questionGroup._id)" (change)="onCheckChanged($event)"></td>

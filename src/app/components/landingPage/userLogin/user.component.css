@@ -3,8 +3,8 @@ body {
 }
 
 .zen-info {
-    height: 100vh;
-    padding: 4%;
+    min-height: 100vh;
+    padding: 10%;
 }
 
 .page-wrap {
@@ -16,6 +16,7 @@ body {
     border: none;
     background: white;
     border-radius: 5px;
+    margin: 1% 0;
 }
 
 .log-sec {
@@ -40,34 +41,34 @@ body {
   color: white;
 }
 
+.form-text {
+  color: white;
+}
 
 .form-item{
-    position: relative;
-    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
   }
   .form-item input{
-    display: block;
     width: 400px;
-    height: 45px;
+    height: 40px;
     background: transparent;
     border: solid 2px #ccc;
     transition: all .3s ease;
     border-radius: 5px;
-    padding: 0 15px
+    padding: 0 15px;
+    outline: none;
   }
   .form-item input:focus{
     border-color: white;
   }
   .form-item label{
-    position: absolute;
     cursor: text;
-    z-index: 2;
-    top: 13px;
-    left: 10px;
+    float: left;
+    clear: both;
     font-size: 14px;
     font-weight: bold;
     background: #10005d;
-    padding: 0 10px;
     color: white;
     transition: all .3s ease
   }
@@ -97,7 +98,7 @@ body {
     .form-item input{
       display: block;
       width: 300px;
-      height: 45px;
+      height: 40px;
       background: transparent;
       border: solid 2px #ccc;
       transition: all .3s ease;
