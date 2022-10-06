@@ -12,49 +12,63 @@ import { QuizModifyComponent } from './components/dashboard/admin/modifyQuiz/qui
 import { UpdateQuestionGroupsComponent } from './components/dashboard/admin/update-question-groups/update-question-groups.component';
 import { CreateQuizComponent } from './components/dashboard/admin/create-quiz/create-quiz.component';
 import { UpdateQuizComponent } from './components/dashboard/admin/update-quiz/update-quiz.component';
-import { DisplayQuizComponent } from './components/dashboard/admin/display-quiz/display-quiz.component';
+import { DashboardComponent } from './components/dashboard/user/dashboard/dashboard.component';
+import { ProfileComponent } from './components/dashboard/user/profile/profile.component';
+import { QuizPageComponent } from './components/dashboard/user/quiz-page/quiz-page.component';
 
 const routes: Routes = [
-{
-  path: "",
-  component: UserComponent
-},
-{
-  path: 'user',
-  component: QuizdisplayComponent
-},
-{
-  path: 'admin',
-  component: AdminHomeComponent
-},
-{
-  path: 'questions',
-  component: QuestionDisplayComponent,
-},
-{
-  path: 'question-group',
-  component: QuestionGroupDisplayComponent,
-},
-{
-  path: 'question-group/creategroup',
-  component: CreategrpformComponent
-},
-{
-  path: 'question-group/updategroup/:id',
-  component: UpdateQuestionGroupsComponent
-},
-{
-  path: 'quiz',
-  component: DisplayQuizComponent
-},
-{
-  path: 'quiz/createquiz',
-  component: CreateQuizComponent
-},
-{
-  path: 'quiz/updatequiz/:id',
-  component: UpdateQuizComponent
-}
+  {
+    path: "",
+    component: UserComponent
+  },
+  {
+    path: 'user',
+    component: QuizdisplayComponent
+  },
+  {
+    path: 'admin',
+    component: AdminHomeComponent
+  },
+  {
+    path: 'questions',
+    component: QuestionDisplayComponent,
+  },
+  {
+    path: 'question-group',
+    component: QuestionGroupDisplayComponent,
+  },
+  {
+    path: 'question-group/creategroup',
+    component: CreategrpformComponent
+  },
+  {
+    path: 'question-group/updategroup/:id',
+    component: UpdateQuestionGroupsComponent
+  },
+  {
+    path: 'quiz',
+    component: DisplayQuizComponent
+  },
+  {
+    path: 'quiz/createquiz',
+    component: CreateQuizComponent
+  },
+  {
+    path: 'quiz/updatequiz/:id',
+    component: UpdateQuizComponent
+  },
+  {
+    path:'quizUser',
+    component:DashboardComponent
+  },
+  {
+    path:'profile',
+    component:ProfileComponent
+  },
+  {
+    path:'quizPage',
+    component:QuizPageComponent
+  }
 ];
 
 @NgModule({

@@ -200,6 +200,65 @@
             </select>
             <label for="option1">Correct Answer</label>
           </div>
+            <div class="modal-body">
+                <form class="myForm text-center" name="formData" #updateQue="ngForm">
+                    <div class="mb-3 form-floating">
+                        <input class="form-control" placeholder="Question" type="text" #title required name="title"
+                            value={{que.title}} [(ngModel)]="que.title">
+                        <label for="emailid">Question</label>
+                    </div>
+                    <div class="mb-3 form-floating">
+                        <select #type class="form-select" name="type" value={{que.type}} [(ngModel)]="que.type">
+                            <option value="Node" selected>Node</option>
+                            <option value="Java">Java</option>
+                            <option value="Javascript">Javascript</option>
+                            <option value="Angular">Angular</option>
+                            <option value="Mongo">Mongo</option>
+                            <option value="Spring">Spring</option>
+                        </select>
+                        <label for="type">Type</label>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3 form-floating">
+                                <input class="form-control" type="text" #option1 placeholder="Option 1" required
+                                    value={{que.option1}} name="option1" [(ngModel)]="que.option1">
+                                <label for="option1">Option 1</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3 form-floating">
+                                <input class="form-control" type="text" #option2 placeholder="Option 2" required
+                                    value={{que.option2}} name="option2" [(ngModel)]="que.option2">
+                                <label for="option1">Option 2</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3 form-floating">
+                                <input class="form-control" type="text" #option1 placeholder="Option 3" required
+                                    value={{que.option3}} name="option3" [(ngModel)]="que.option3">
+                                <label for="option3">Option 3</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3 form-floating">
+                                <input class="form-control" type="text" #option1 placeholder="Option 4" required
+                                    value={{que.option4}} name="option4" [(ngModel)]="que.option4">
+                                <label for="option4">Option 4</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3 form-floating">
+                        <select #answer class="form-select" name="answer" value={{que.answer}} [(ngModel)]="que.answer">
+                            <option value="que.option1">{{que.option1}}</option>
+                                <option value="que.option2">{{que.option2}}</option>
+                                <option value="que.option3">{{que.option3}}</option>
+                                <option value="que.option4">{{que.option4}}</option>
+                        </select>
+                        <label for="option1">Correct Answer</label>
+                    </div>
 
           <div class="mb-3 form-floating">
             <select

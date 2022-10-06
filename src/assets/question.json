@@ -1,0 +1,112 @@
+{
+    "questionID": [
+        {
+            "_id": {
+              "$oid": "633294c67201e0120895c9aa"
+            },
+            "title": "Which of the following is not a Java features?",
+            "type": "java",
+            "option1": "Dynamic",
+            "option2": "Architecture Neutral",
+            "option3": "Use of pointers",
+            "option4": "Object-oriented",
+            "answer": "Use of pointers",
+            "difficultyLevel": "easy",
+            
+            "qId": 4,
+            "__v": 0
+          }
+        ,
+        {
+            "_id": {
+              "$oid": "6331965214ae055d9db6fdcd"
+            },
+            "title": "Which of the following statement is correct for AngularJS?",
+            "type": "java",
+            "option1": "AngularJS is an HTML framework",
+            "option2": "AngularJS is a Java framework",
+            "option3": "AngularJS is a JavaScript framework",
+            "option4": "AngularJS is a SQL framework",
+            "answer": "AngularJS is a JavaScript framework",
+            "difficultyLevel": "easy",
+            "uId": 9,
+            "__v": 0
+          }
+          ,
+          {
+            "_id": {
+              "$oid": "6331965214ae055d9db6fdcf"
+            },
+            "title": "Which of the following is the correct syntax for writing AngularJS expressions?",
+            "type": "java",
+            "option1": "(expression)",
+            "option2": "{{expression}}",
+            "option3": "{{{expression}}}",
+            "option4": "[expression]",
+            "answer": "{{expression}}",
+            "difficultyLevel": "easy",
+            "uId": 9,
+            "__v": 0
+          },
+          {
+            "_id": {
+              "$oid": "6331965214ae055d9db6fdcg"
+            },
+            "title": "AngularJS is perfect for?",
+            "type": "java",
+            "option1": "SPAs",
+            "option2": "MPAs",
+            "option3": "DPAs",
+            "option4": "CPAs",
+            "answer": "SPAs",
+            "difficultyLevel": "easy",
+            "uId": 9,
+            "__v": 0
+          },
+          {
+            "_id": {
+              "$oid": "6331965214ae055d9db6fdce"
+            },
+            "title": "On which of the Architectural pattern AngularJS is based?",
+            "type": "java",
+            "option1": "Observer Pattern",
+            "option2": "Decorator pattern",
+            "option3": "MVC Architecture pattern",
+            "option4": "MVVM Architectural pattern",
+            "answer": "MVVM Architectural pattern",
+            "difficultyLevel": "easy",
+            "uId": 9,
+            "__v": 0
+          },
+          {
+            "_id": {
+              "$oid": "6320190249629c259a9d3977"
+            },
+            "title": "Which of the following is not a disadvantage of React.js?",
+            "type": "react",
+            "option1": "React.js has only a view layer. We have put your code for Ajax requests, events and so on.",
+            "option2": "The library of React.js is pretty large.",
+            "option3": "The JSX in React.js makes code easy to read and write.",
+            "option4": "The learning curve can be steep in React.js",
+            "answer": "The JSX in React.js makes code easy to read and write.",
+            "difficultyLevel": "easy",
+            "uId": 9,
+            "__v": 0
+          },
+          {
+            "_id": {
+              "$oid": "632019ca49629c259a9d397a"
+            },
+            "title": "A class is a type of function, but instead of using the keyword function to initiate it, which keyword do we use?",
+            "type": "react",
+            "option1": "Constructor",
+            "option2": "Class",
+            "option3": "Object",
+            "option4": "DataObject",
+            "answer": "Class",
+            "difficultyLevel": "easy",
+            "uId": 9,
+            "__v": 0
+          }
+    ]
+}

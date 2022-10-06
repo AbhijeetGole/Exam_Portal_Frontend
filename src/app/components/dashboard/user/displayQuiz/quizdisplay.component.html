@@ -1,3 +1,16 @@
-<p>quizdisplay works!</p>
-
-<button type="button" class="btn btn-success btn-md ms-auto float-end me-2" (click)="logout()">Logout</button>
+<div class="quizz">
+  <div class="quiz-display">
+    <div class="d-flex text-center justify-content-center align-items-cneter">
+      <div>
+        <h1>Welcome {{ userData.firstname }} {{ userData.lastname }}</h1>
+        <p>
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptatem
+          voluptate dignissimos nemo nulla eveniet enim cumque vitae laudantium
+          mollitia sit.
+        </p>
+        <div>
+          <button type="button" class="btn btn-dark" routerLink="/quizUser">
+            Go to Quiz
+          </button>
+        </div>
+      </div>

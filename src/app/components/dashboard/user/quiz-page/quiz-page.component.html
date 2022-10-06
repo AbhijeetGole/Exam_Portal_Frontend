@@ -1,0 +1,124 @@
+<div class="main">
+    <div class="container mt-4">
+        <div class="card">
+            <div class="d-flex justify-content-between p-3">
+                <div class="image">
+                    <img src="../../../../../assets/logo.jpg" width="50" alt="logo">
+                </div>
+                <div class="quiz-header" *ngIf="!isQuizCompleted">
+                    <h4 style="font-family: cursive;">{{title}}</h4>
+                    <span style="font-style: italic;">Welcome {{userData.firstname}} {{userData.lastname}}</span>
+
+                </div>
+            </div>
+
+            <ng-container *ngIf="!isQuizCompleted">
+                <div class="d-flex justify-content-around py-3">
+                    <div class="question-remain">
+                        <span style="font-style: italic;">Question {{currentQuestion+1}} to
+                            {{filteredQuestions.length}}</span>
+                    </div>
+                    <div class="timer">
+                        <h5>{{getFormattedTime()}}⏱</h5>
+                    </div>
+                </div>
+                <div class="progress mb-3">
+
+                    <div class="progress-bar progress-bar-striped" role="progressbar"
+                        [ngStyle]="{'width': getProgress()}" [ngStyle]="{'width':progress+'%'}" aria-valuenow="10"
+                        aria-valuemin="0" aria-valuemax="100"></div>
+
+                </div>
+                <div class="question">
+                    <div class="quest">
+                        <h3> {{filteredQuestions[currentQuestion].title}} </h3>
+                    </div>
+                </div>
+                <div class="options">
+                    <ol>
+                        <li>
+                            <div class="card">
+                                <input type="radio" class="radio isHidden" name="radio_a" id="option1"
+                                    value={{filteredQuestions[currentQuestion].option1}}
+                                    name={{filteredQuestions[currentQuestion].option1}}
+                                    [(ngModel)]="filteredQuestions[currentQuestion].givenAns"
+                                    [ngClass]="filteredQuestions[currentQuestion].option1.isSelected?'bg-success text-white':''">
+
+                                <label for="option1"
+                                    class="label">{{filteredQuestions[currentQuestion].option1}}</label>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="card">
+
+                                <input type="radio" class="radio isHidden" name="radio_a" id="option2"
+                                    value={{filteredQuestions[currentQuestion].option2}}
+                                    [(ngModel)]="filteredQuestions[currentQuestion].givenAns">
+                                <label for="option2"
+                                    class="label">{{filteredQuestions[currentQuestion].option2}}</label>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="card">
+                                <input type="radio" class="radio isHidden" name="radio_a" id="option3"
+                                    value={{filteredQuestions[currentQuestion].option3}}
+                                    [(ngModel)]="filteredQuestions[currentQuestion].givenAns">
+                                <label for="option3" class="label">
+                                    {{filteredQuestions[currentQuestion].option3}}</label>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="card">
+                                <input type="radio" class="radio isHidden" name="radio_a" id="option4"
+                                    value={{filteredQuestions[currentQuestion].option4}}
+                                    [(ngModel)]="filteredQuestions[currentQuestion].givenAns">
+                                <label for="option4" class="label">
+                                    {{filteredQuestions[currentQuestion].option4}}</label>
+                            </div>
+                        </li>
+                    </ol>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <button [disabled]="currentQuestion===0" class="btn"
+                        (click)="lastAnswerMarked(); previousQuestion(); "><i
+                            class="fa text-primary fa-solid fa-chevron-left fa-3x" aria-hidden="true"></i></button>
+                    <button class="btn btn-primary" type="submit" *ngIf="currentQuestion===filteredQuestions.length-1"
+                        (click)="submitAns()">SUBMIT</button>
+                    <button [disabled]="currentQuestion===filteredQuestions.length-1" class="btn"
+                        (click)="answerMarked(); getProgress(); nextQuestion(); "><i
+                            class="fa text-primary fa-solid fa-chevron-right fa-3x" aria-hidden="true"></i></button>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="!isQuizCompleted">
+                <div class="tag">
+                    <!-- <div class="answer-demo">
+                
+            </div>
+            <div class="answer-demo1">
+               
+            </div>  -->
+                    <!-- <div style="display: inline"><span> =Answered</span></div>  -->
+                    <div class="answer-indicator" *ngFor="let item of lengthArray; let i=index;let j=index;"
+                        [ngClass]="filteredQuestions[j].isAnswered?'attempted text-white':'left'">
+                        {{i+1}}
+                    </div>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="isQuizCompleted">
+                <div class="row d-flex justify-content-between">
+                    <img style="width: 50%;" class="img-fluid col-sm-12 mx-auto"
+                        src="https://icon-library.com/images/celebration-icon-png/celebration-icon-png-7.jpg" alt="">
+                    <div class="result text-center col-md-6 col-sm-12">
+                        <h3>Congratulation!! <br> You have completed the quiz. <br> Below is your Result:</h3>
+                        <p>Total Question :{{filteredQuestions.length}} </p>
+                        <p>Total correct Answered: {{correctAns}}</p>
+                        <p>Total wrong Answered: {{inCorrectAns}} </p>
+                        <p>Your Score: {{points}} Points</p>
+                        <a routerLink="/user">Back To Home</a>
+                    </div>
+
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</div>

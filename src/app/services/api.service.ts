@@ -23,12 +23,11 @@ export class ApiService {
 
   LoginUser(user:any){
     this.http.post(environment.userUrl+'exam-portal/user/authenticate',user).subscribe((res:any)=>{
-    this.uservalue=res;   
-    // alert(this.uservalue.message) 
-    //console.log(res['token'])
-    this.cookie.set('jwt',res['token'])
-
-    if(this.uservalue.role=='admin'){
+    this.uservalue=res;  
+      this.cookie.set('jwt',res.data.token)
+      this.user=this.uservalue.role.toString();
+      localStorage.setItem("role",this.user)
+     if(this.user=='admin'){
       this.router.navigate(['admin']);
     }else if(this.uservalue.role=='user'){
       this.router.navigate(['user']);
@@ -64,6 +63,15 @@ export class ApiService {
       // this.array=res;
       // console.log(this.array)
     })
+  }
+  getUserInfo(){
+    const headers = new HttpHeaders({
+
+      'Content-Type': 'application/json',
+     'jwt':this.cookie.get('jwt')
+
+    });
+    return  this.http.get(environment.userUrl+'exam-portal/user/getuser',{ headers: headers })
   }
   
 

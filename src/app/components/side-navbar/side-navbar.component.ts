@@ -1,7 +1,9 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import { navBarData } from './nav-data';
+import { environment } from 'src/environments/environment';
 
 interface SideNavToggle {
   screenWidth: number;
@@ -19,9 +21,10 @@ export class SideNavbarComponent implements OnInit {
   collapsed: boolean;
   screenWidth: number;
   navData: any;
+  role:any;
   constructor(private router: Router, private cookie: CookieService) {
     this.collapsed = true
-    this.navData = navBarData
+    
     this.screenWidth =0
   }
 
@@ -37,10 +40,14 @@ export class SideNavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.screenWidth = window.innerWidth 
+    this.role=localStorage.getItem("role")
+    console.log(this.role)
+    this.navData = navBarData
   }
 
   logout() {
     this.cookie.delete('jwt');
     this.router.navigate(['']);
+    localStorage.clear();
   }
 }

@@ -1,6 +1,5 @@
-<app-sidenavbar *ngIf="!isLanding()"></app-sidenavbar>
-<!-- <app-body
-    [collapsed]="isSideNavCollapsed"
-    [screenWidth]="screenWidth"
-></app-body> -->
+<app-sidenavbar *ngIf="!isLanding() && role=='admin'"></app-sidenavbar>
+
+<app-sidenavbar-user *ngIf="!isLanding() && !QuizPage()  &&  role=='user'"></app-sidenavbar-user>
+
 <router-outlet></router-outlet>
