@@ -1,8 +1,5 @@
 <div class="container">
-  <button
-    class="btn create-btn float-end mt-3 mb-3 px-4"
-    (click)="createQuestionGroup()"
-  >
+  <button class="btn create-btn float-end mt-3 mb-3 px-4" (click)="createQuestionGroup()">
     <i class="bi bi-plus-lg"></i> Create
   </button>
   <table class="table borderless">
@@ -15,10 +12,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr
-        *ngFor="let questiongrp of questionGrps; let i = index"
-        class="table-data"
-      >
+      <tr *ngFor="let questiongrp of questionGrps; let i = index" class="table-data">
         <td scope="row" class="text-center table-row align-middle">
           {{ i + 1 }}
         </td>
@@ -27,24 +21,12 @@
           {{ questiongrp.type }}
         </td>
         <td class="text-center table-row">
-          <button
-            class="btn updatebtn align-items-center"
-            placement="top"
-            ngbTooltip="Update Question"
-            #{{question._id}}
-            (click)="updateQuestionGroup(questiongrp._id)"
-          >
+          <button class="btn updatebtn align-items-center" placement="top" ngbTooltip="Update Question"
+            #{{question._id}} (click)="updateQuestionGroup(questiongrp._id)">
             <i class="bi bi-pencil-square"></i>
           </button>
-          <button
-            class="btn deleteBtn"
-            placement="top"
-            ngbTooltip="Delete Question!"
-            #{{question._id}}
-            (click)="getQuestionGroupById(questiongrp._id)"
-            data-bs-toggle="modal"
-            data-bs-target="#deletemodal"
-          >
+          <button class="btn deleteBtn" placement="top" ngbTooltip="Delete Question!" #{{question._id}}
+            (click)="getQuestionGroupById(questiongrp._id)" data-bs-toggle="modal" data-bs-target="#deletemodal">
             <i class="bi bi-trash"></i>
           </button>
         </td>
@@ -52,11 +34,7 @@
     </tbody>
   </table>
   <div class="page-controls">
-    <pagination-controls
-      previousLabel="Prev"
-      nextLabel="Next"
-      (pageChange)="onTableDataChange($event)"
-    >
+    <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
     </pagination-controls>
   </div>
 </div>
@@ -157,25 +135,13 @@
   </div>
 </div>
 
-<div
-  class="modal fade"
-  id="deletemodal"
-  data-bs-keyboard="false"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="modalLabel"
-  aria-hidden="true"
->
+<div class="modal fade" id="deletemodal" data-bs-keyboard="false" tabindex="-1" role="dialog"
+  aria-labelledby="modalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="modalLabel">Delete Question</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <form class="myForm text-center">Confirm Deletion?</form>
@@ -184,12 +150,7 @@
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
           No
         </button>
-        <button
-          type="button"
-          class="btn btn-success"
-          data-bs-dismiss="modal"
-          (click)="deleteQuestionGroup(que._id)"
-        >
+        <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="deleteQuestionGroup(que._id)">
           Yes
         </button>
       </div>
