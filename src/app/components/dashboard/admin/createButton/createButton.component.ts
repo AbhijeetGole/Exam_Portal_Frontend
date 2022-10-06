@@ -101,7 +101,6 @@ export class CreatebuttonComponent {
   }
 
   createQuestion(data: any): any {
-
     this.showCreateToast = false;
     this.questionService.createNewQuestion(data).subscribe((data: any) => {
       this.showCreateToast = true;

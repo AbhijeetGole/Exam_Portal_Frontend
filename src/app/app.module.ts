@@ -54,7 +54,8 @@ import { QuizdisplayComponent } from './components/dashboard/user/displayQuiz/qu
     ReactiveFormsModule,
     HttpClientModule,
     NgbModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    ClipboardModule
   ],
   providers: [],
   bootstrap: [AppComponent]
