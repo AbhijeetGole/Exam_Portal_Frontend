@@ -2,11 +2,43 @@
     z-index: 1200;
     top: 10%;
 }
-/* 
-.create-btn {
-    margin-top: 100px;
-} */
+
+.close-btn {
+    color: white !important;
+    outline: none;
+    border: none;
+    background-color: transparent;
+}
+
+.btn-closed, .btn-closed:hover {
+    color: black;
+    background-color: white;
+}
+
+.btn-update, .btn-update:hover {
+    color: white;
+    background-color: #F0582E;
+}
+
+.create-btn:hover {
+    background-color: #F0582E;
+    color: white;
+    border: none;
+}
+
 
 .test {
     z-index: 10;
+}
+
+/* ----------Modal CSS----------- */
+
+
+.modal-header {
+    color: white;
+    background-color: #2a3889;
+}
+
+.modal-footer {
+    background-color: #2a3889;
 }

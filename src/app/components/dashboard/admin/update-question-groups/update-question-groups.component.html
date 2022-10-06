@@ -6,12 +6,13 @@
         <div class="row">
             <div class="col-md-4 mb-3">
                 <div class="form-floating">
-                    <input type="text" [(ngModel)]="QuestionGroup.title" class="form-control" #title name="title">
-                <label for="title">Title</label>
+                    <input type="text" [(ngModel)]="QuestionGroup.name" class="form-control" #name name="name">
+                <label for="name">Title</label>
                 </div>
             </div>
             <div class="col-md-4 mb-3">
                 <div class="form-floating">
+                    <!-- <label for="type">Type</label> -->
                 <select #topic class="form-select" name="type"
                     (change)="getQuestionByTopic(topic.value)">
                     <option value="All" selected>All</option>
@@ -22,13 +23,12 @@
                     <option value="Mongo">Mongo</option>
                     <option value="Spring">Spring</option>
                 </select>
-                <label for="type">Type</label>
                 </div>
             </div>
             <div class="col-md-4 mb-3">
                 <div class="form-floating">
-                    <input type="text" [(ngModel)]="QuestionGroup.topic" class="form-control" #topic name="topic">
-                <label for="topic">Topic</label>
+                    <input type="text" [(ngModel)]="QuestionGroup.type" class="form-control" #type name="type">
+                <label for="type">Topic</label>
                 </div>
             </div>
         </div>
@@ -49,7 +49,7 @@
             <tr *ngFor="let question of filteredQuestions, let i=index">
                 <th scope="row" class="text-center align-middle">{{ i+1 }}</th>
                 <td class="align-middle">{{ question.title }}</td>
-                <td class="text-center align-middle">{{ question.topic }}</td>
+                <td class="text-center align-middle">{{ question.type }}</td>
                 <td class="text-center"><input type="checkbox" [value]=question._id id={{question._id}}
                         [checked]="isChecked(question._id)" (change)="onCheckChanged($event)"></td>
             </tr>
