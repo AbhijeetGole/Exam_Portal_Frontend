@@ -1,0 +1,29 @@
+.toast-container {
+    z-index: 1200;
+    top: 10%;
+}
+
+.card-table {
+    border-radius: 10px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.content {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.paginate {
+    margin-top: auto;
+}
+/* -----------Table CSS-------------- */
+
+.sr-no {
+    font-weight: 600;
+}
+
+
+@media screen and (max-width: 992px) { 
+    
+}

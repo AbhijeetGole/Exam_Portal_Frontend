@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {Router } from '@angular/router';
 import { CookieService} from 'ngx-cookie-service';
 import { environment } from 'src/environments/environment';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +17,14 @@ export class ApiService {
     this.http.post<any>(environment.userUrl+'exam-portal/user',user).subscribe((res:any)=>{
       console.log(res)
       this.uservalue=res;
-      alert("Account Created! Please Login to Continue");
+      
+      Swal.fire('success',"Account Created! Please Login to Continue",'success');
+    },error=>{
+      Swal.fire("Alert","Something went wrong",'error')
+      this.router.navigate([''])
     })
+
+    return 'User registered successfully!';
   }
   
   LoginUser(user:any){
@@ -25,15 +32,17 @@ export class ApiService {
     this.uservalue=res;   
       this.cookie.set('jwt',res.data.token)
       this.user=this.uservalue.role.toString();
+      localStorage.setItem("role",this.user)
      if(this.user=='admin'){
       this.router.navigate(['admin']);
     }else if(this.user=='user'){
       this.router.navigate(['user']);
     }
     },(error:any)=>{
-       alert("Required Email or Password!")
+      Swal.fire("Alert","Required Email or Password!",'error')
     })
     
+    return 'User logged in successfully!';
   }
 
   logout(user:any){
@@ -47,6 +56,8 @@ export class ApiService {
       console.log(res)
      
     })
+
+    return 'User logged out successfully!';
   }
   Authenticate(){
     const headers = new HttpHeaders({

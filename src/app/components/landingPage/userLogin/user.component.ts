@@ -4,13 +4,14 @@ import { ApiService } from '../../../services/api.service';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-// import {Toast} from 'bootstrap';
+import { ToastrService } from 'ngx-toastr'
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css']
 })
 export class UserComponent {
+  showCreateToast=false
   toggle = false;
   showRegisterToast = false;
   showLoginToast = false;
@@ -28,7 +29,8 @@ export class UserComponent {
     password:'',
     confirmpassword:''
   }
-  constructor(private login: LoginService, private apiService: ApiService, private router:Router,private cookieService:CookieService) {
+  constructor(private login: LoginService, private apiService: ApiService, private router:Router,
+    private cookieService:CookieService,private toastr:ToastrService) {
   }
   repeatPass:string='none';
   userLogin=new FormGroup({
@@ -75,28 +77,30 @@ export class UserComponent {
     return this.userEmails.get('confirmpassword') as FormControl
   }
 
-  // get email():FormControl{
-  //   return this.userLogin.get('email') as FormControl
-  // }
   LoginUser(user: any) {
-    
-    // if (this.userModel.email.trim() == '' || this.userModel.email == null) {
-    //   alert('Email is Required!!');
-    //   return;
-    // }
-    // if (this.userModel.password.trim() == '' || this.userModel.password == null) {
-    //   alert('password is required');
-    //   return;
-    // }
+
     this.apiService.LoginUser(user);
     this.showLoginToast = true;
+
+    return 'User logged in successfully!';
   }
-
+ 
   registerUser(user: any) {
-
-    this.apiService.registerUser(user)
+    // console.log(user.password,user.confirmpassword)
+    this.showCreateToast=false
+    if(user.password!=user.confirmpassword){
+      this.showCreateToast=true
+      this.toastr.error("Passwords are not Matching")
+      // alert("Passwords are not Matching")
+      this.router.navigate([''])
+    }
+    else{
+      this.apiService.registerUser(user)
     this.toggle = !this.toggle
     this.showRegisterToast = true;
+    }
+
+    return 'User registered successfully!';
   }
   
   displayReg() {

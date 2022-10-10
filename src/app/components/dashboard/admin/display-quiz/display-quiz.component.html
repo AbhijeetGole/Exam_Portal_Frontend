@@ -1,105 +1,84 @@
-<div class="container">
-  <button
-    class="btn create-btn float-end mt-3 mb-3 px-4"
-    (click)="createQuiz()"
-  >
-    <i class="bi bi-plus-lg"></i> Create
-  </button>
-  <table class="table borderless">
-    <thead class="table-head">
-      <tr>
-        <th scope="col" class="text-center col-md-1">Sr No.</th>
-        <th scope="col" class="col-md-3">Title</th>
-        <th scope="col" class="col-md-3">Duration</th>
-        <th scope="col" class="col-md-3">Quiz ID</th>
-        <th scope="col" class="text-center col-md-2">Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr
-        *ngFor="
-          let quiz of quizzes
-            | paginate
-              : {
-                  itemsPerPage: tableSize,
-                  currentPage: page,
-                  totalItems: count
-                };
-          let i = index
-        "
-        class="table-data"
-      >
-        <th scope="row" class="text-center align-middle table-row">
-          {{ (page - 1) * tableSize + (i + 1) }}
-        </th>
-        <td class="align-middle table-row">{{ quiz.title }}</td>
-        <td class="align-middle table-row">{{ quiz.endTime }} min</td>
-        <td class="table-row">{{ quiz._id }}</td>
-        <td class="text-center table-row">
-          <!-- <button ngbTooltip="Copy Id" class="btn">
-            <i class="bi bi-clipboard2-fill"></i>
-          </button> -->
-          <button
-            class="btn updatebtn align-items-center"
-            placement="top"
-            ngbTooltip="Update Quiz"
-            #{{quiz._id}}
-            (click)="updateQuiz(quiz._id)"
-          >
-            <i class="bi bi-pencil-square"></i>
-          </button>
-          <button
-            class="btn deleteBtn"
-            placement="top"
-            ngbTooltip="Delete Quiz"
-            #{{quiz._id}}
-            (click)="getQuizById(quiz._id)"
-            data-bs-toggle="modal"
-            data-bs-target="#deletemodal"
-          >
-            <i class="bi bi-trash"></i>
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <div class="page-controls">
-    <pagination-controls
-      previousLabel="Prev"
-      nextLabel="Next"
-      (pageChange)="onTableDataChange($event)"
-    >
-    </pagination-controls>
+<div class="content mb-auto">
+  <div class="container mt-4">
+    <div class="d-flex justify-content-between mt-5">
+      <h4 class="align-middle">Quizes</h4>
+      <button id="createQuiz" class="create-btn" (click)="createQuiz()">
+        <i class="bi bi-plus-circle-fill"></i> Create New
+      </button>
+    </div>
+    <div class="card-table">
+      <table class="table borderless">
+        <thead class="table-head">
+          <tr>
+            <th scope="col" class="text-center col-md-1">Sr No.</th>
+            <th scope="col" class="col-md-4">Title</th>
+            <th scope="col" class="col-md-2">Duration</th>
+            <th scope="col" class="col-md-3">Quiz ID</th>
+            <th scope="col" class="text-center col-md-2">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="
+              let quiz of quizzes
+                | paginate
+                  : {
+                      itemsPerPage: tableSize,
+                      currentPage: page,
+                      totalItems: count
+                    };
+              let i = index" class="table-data">
+            <th scope="row" class="text-center align-middle table-row col-md-1">
+              {{ (page - 1) * tableSize + (i + 1) }}
+            </th>
+            <td class="align-middle table-row col-md-4">{{ quiz.title }}</td>
+            <td class="align-middle table-row col-md-2">{{ quiz.endTime }} min</td>
+            <td class="align-middle table-row col-md-3" style="overflow-wrap: anywhere;">
+              <button class="btn copy-btn d-inline text-center" ngbTooltip="Copy Id"
+                (click)="copyToClipboard(copyQuizId)">
+                <i class="bi bi-clipboard-fill"></i>
+              </button>
+              <p #copyQuizId class="d-inline">{{ quiz._id }}</p>
+            </td>
+            <td class="text-center table-row col-md-2">
+
+              <button class="btn updatebtn align-items-center" placement="top" ngbTooltip="Update Quiz" #{{quiz._id}}
+                (click)="updateQuiz(quiz._id)">
+                <i class="bi bi-pencil-square"></i>
+              </button>
+              <button class="btn deleteBtn" placement="top" ngbTooltip="Delete Quiz" #{{quiz._id}}
+                (click)="getQuizById(quiz._id)" data-bs-toggle="modal" data-bs-target="#deletemodal">
+                <i class="bi bi-trash"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="paginate d-flex justify-content-center mt-auto">
+    <div class="page-controls">
+      <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+      </pagination-controls>
+    </div>
   </div>
 </div>
 
-<div class="d-flex justify-content-center">
-  <div class="toast-container position-fixed top-0 p-3" *ngIf="showUpdateToast">
+<!-- <div class="d-flex justify-content-center">
+  <div class="toast-container position-fixed" *ngIf="showCopyToast">
     <ngb-toast class="bg-success text-light">
-      Quiz Updated Successfully
+      Quiz ID copied!
     </ngb-toast>
   </div>
-</div>
+</div> -->
 
-<div
-  class="modal fade"
-  id="deletemodal"
-  data-bs-keyboard="false"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="modalLabel"
-  aria-hidden="true"
->
+
+<div class="modal fade" id="deletemodal" data-bs-keyboard="false" tabindex="-1" role="dialog"
+  aria-labelledby="modalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="modalLabel">Delete Quiz</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <form class="myForm text-center">Confirm Deletion?</form>
@@ -108,12 +87,7 @@
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
           No
         </button>
-        <button
-          type="button"
-          class="btn btn-success"
-          data-bs-dismiss="modal"
-          (click)="deleteQuizById(que._id)"
-        >
+        <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="deleteQuizById(que._id)">
           Yes
         </button>
       </div>
@@ -121,10 +95,10 @@
   </div>
 </div>
 
-<div class="d-flex justify-content-center">
-  <div class="toast-container position-fixed top-0 p-3" *ngIf="showDeleteToast">
+<!-- <div class="d-flex justify-content-center">
+  <div class="toast-container position-fixed" *ngIf="showQuizDeleteToast">
     <ngb-toast class="bg-danger text-light">
       Quiz Deleted Successfully
     </ngb-toast>
   </div>
-</div>
+</div> -->

@@ -13,4 +13,18 @@ describe('UpdateDeletedQuestionGroupService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+
+  it('should get the id', () => {
+    service.selectedId.subscribe((id:any) => {
+      expect(id).toBe('');
+    })
+  })
+
+  it('should update the id', () => {
+    service.setDeletedQuestionGroupId('1');
+
+    service.selectedId.subscribe((id:any) => {
+      expect(id).toBe('1');
+    })
+  })
 });

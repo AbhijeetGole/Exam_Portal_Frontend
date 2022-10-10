@@ -6,7 +6,9 @@ import { QuizService } from 'src/app/services/quiz.service';
 import { CookieService } from 'ngx-cookie-service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-
+import { FormGroup, FormControl, Validators, Form } from '@angular/forms';
+import Swal from 'sweetalert2';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-create-quiz',
   templateUrl: './create-quiz.component.html',
@@ -17,15 +19,33 @@ export class CreateQuizComponent implements OnInit {
   questionGroups: any[] = [];
   checked: any[] = [];
   selectAll: boolean = false;
-  uservalue:any;
+  uservalue: any;
+  page: number = 1;
+  count: number = 0;
+  tableSize: number = 8;
+  showCreateToast=false;
   Quiz: any = {
     title: '',
     description: '',
     duration: '15',
   };
+  screenWidth: any;
 
-  constructor(private questionService: QuestionService, private questionGrpService: QuestionGrpService, private router: Router, private quizService: QuizService, private cookie:CookieService, private http: HttpClient) { }
-
+  constructor(private questionService: QuestionService, private toastr: ToastrService, private questionGrpService: QuestionGrpService, private router: Router, private quizService: QuizService, private cookie: CookieService, private http: HttpClient) { this.screenWidth = window.innerWidth; }
+  quizGroup=new FormGroup({
+    title:new FormControl('',[Validators.required]),
+    description:new FormControl('',[Validators.required]),
+    duration:new FormControl('',[Validators.required])
+  })
+  get TITLE():FormControl{
+    return this.quizGroup.get('title') as FormControl
+  }
+  get DESCRIPTION():FormControl{
+    return this.quizGroup.get('description') as FormControl
+  }
+  get DURATION():FormControl{
+    return this.quizGroup.get('duration') as FormControl
+  }
   ngOnInit(): void {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -36,11 +56,24 @@ export class CreateQuizComponent implements OnInit {
       .subscribe((data: any) => {
         this.uservalue = data
         if (this.uservalue != 'admin') {
-          alert("You are not LoggedIn")
+          Swal.fire("Alert","You are not LoggedIn","warning")
           this.router.navigate([''])
         }
+      },(error: any) => {
+        Swal.fire("Alert","You are not LoggedIn","warning")
+        this.router.navigate([''])
       })
     this.getQuestionGroups()
+
+    if (this.screenWidth < 378) {
+      this.tableSize = 3;
+    }
+    if (this.screenWidth > 378 && this.screenWidth < 480) {
+      this.tableSize = 4;
+    }
+    if (this.screenWidth < 1400 && this.screenWidth > 480) {
+      this.tableSize = 6;
+    }
   }
 
   getQuestionGroups() {
@@ -63,9 +96,11 @@ export class CreateQuizComponent implements OnInit {
       endTime: data.duration,
       questionGroup: this.checked
     }
-
+    // this.showCreateToast=false;
     this.quizService.createQuiz(quizPost).subscribe((res: any) => {
-      console.log('question group created successfully!');
+      //  this.showCreateToast=true;
+      this.toastr.success("Quiz created successfully!");
+      console.log('quiz created successfully!');
     }, (error: any) => {
       console.log(error.message);
     })
@@ -92,6 +127,24 @@ export class CreateQuizComponent implements OnInit {
     }
 
     console.log(this.checked);
+  }
+
+  onSelectAll() {
+    this.selectAll = !this.selectAll;
+    if (!this.selectAll) {
+      this.checked = [];
+    }
+  }
+
+  onTableDataChange(event: any) {
+    this.page = event;
+    this.getQuestionGroups();
+  }
+
+  onTableSizeChange(event: any): void {
+    this.tableSize = event.target.value;
+    this.page = 1;
+    this.getQuestionGroups();
   }
 }
 

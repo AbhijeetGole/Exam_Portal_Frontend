@@ -1,0 +1,79 @@
+<div class="content">
+    <div class="container d-flex justify-content-center mt-5">
+        <form class="selectFrom text-center" [formGroup]="questionGroup" #createQueGroup="ngForm"
+            (ngSubmit)="createQuestionGroup(createQueGroup.value)" name="formData">
+            <div class="row mt-5">
+                <div class="col-md-3 mt-2">
+                    <div class="form-floating">
+                        <input type="text" [(ngModel)]="QuestionGroup.title" class="form-control"
+                            formControlName="title" #title name="title">
+                        <label for="title">Title</label>
+                    </div>
+                    <div class="form-text text-danger"
+                        *ngIf="TITLE.errors?.['required'] && (TITLE.touched|| TITLE.dirty )">
+                        Title is Required
+                    </div>
+                </div>
+                <div class="col-md-4 mt-2">
+                    <div class="form-floating">
+                        <select #type class="form-select" name="type" (change)="getQuestionByTopic(type.value)">
+                            <option value="All" selected>All</option>
+                            <option value="Node">Node</option>
+                            <option value="Java">Java</option>
+                            <option value="Javascript">Javascript</option>
+                            <option value="Angular">Angular</option>
+                            <option value="Mongo">Mongo</option>
+                            <option value="Spring">Spring</option>
+                        </select>
+                        <label for="type">Type</label>
+                    </div>
+                </div>
+                <div class="col-md-3 mt-2">
+                    <div class="form-floating">
+                        <input type="text" [(ngModel)]="QuestionGroup.topic" formControlName="topic"
+                            class="form-control" #topic name="topic">
+                        <label for="topic">Topic</label>
+                    </div>
+                    <div class="form-text text-danger"
+                        *ngIf="TOPIC.errors?.['required'] && (TOPIC.touched || TOPIC.dirty )">
+                        Topic is Required
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn updateBtn mt-3" (click)="createQuestionGroup(createQueGroup.value)"
+                        [disabled]="questionGroup.invalid">
+                        <i class="bi bi-plus-circle-fill"></i> Create
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="container">
+        <div class="card-table mb-3 mt-3">
+            <table class="table">
+                <thead class="table-head">
+                    <tr>
+                        <th scope="col" class="text-center col-md-1 align-top">Sr No.</th>
+                        <th scope="col" class="col-md-8 align-top">Questions</th>
+                        <th scope="col" class="text-center col-md-2 align-top">Topic</th>
+                        <th scope="col" class="text-center col-md-1 align-top">Select
+                            <input id="selectAll" type="checkbox" [checked]="selectAll" (change)="onSelectAll()">
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="table-data" *ngFor="let question of filteredQuestions; let i = index">
+                        <td scope="row" class="text-center table-row col-md-1 align-middle">{{(page-1)*tableSize + (i +
+                            1) }}</td>
+                        <td class="align-middle col-md-7 table-row question">{{ question.title }}</td>
+                        <td class="text-center col-md-2 align-middle table-row">{{ question.type }}</td>
+                        <td class="text-center col-md-2 align-middle table-row">
+                            <input type="checkbox" [value]=question._id id={{question._id}}
+                                [checked]="isChecked(question._id)" (change)="onCheckChanged($event)">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

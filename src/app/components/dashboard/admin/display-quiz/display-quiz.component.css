@@ -1,20 +1,23 @@
-.updatebtn {
-    margin-right: 5px;
-}
-
 .toast-container {
     z-index: 1200;
     top: 10%;
 }
 
-@media screen and (max-width: 992px) { 
-    .updatebtn {
-        margin-right: 0px;
-    }
+.card-table {
+    border-radius: 10px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
-@media screen and (max-width: 992px) { 
-    .updatebtn {
-        margin-bottom: 5px;
-    }
+.copy-btn {
+    color: var(--shade2);
+}
+
+.content {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.paginate {
+    margin-top: auto;
 }

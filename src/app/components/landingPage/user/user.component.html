@@ -1,0 +1,178 @@
+<div class="container-fluid info-sec">
+  <div class="row">
+    <div
+      class="col-md-6 d-flex justify-content-center align-items-center zen-info">
+      <div>
+        <app-info></app-info>
+        <div *ngIf="!toggle">
+          <img src="./assets/signin-image.jpg" alt="" srcset="" class="img-intro">
+        </div>
+        <div *ngIf="toggle">
+          <img src="./assets/signup-image.jpg" alt="" srcset="" class="img-intro">
+        </div>
+        
+      </div>
+    </div>
+    <div
+      class="col-md-6 d-flex justify-content-center align-items-center log-sec py-5"
+      *ngIf="!toggle"
+    >
+      <div class="page-wrap">
+        <h2 class="text-center mb-5 head">LOGIN</h2>
+        <form
+          class="form"
+          name="formData"
+          #userData="ngForm"
+          (ngSubmit)="LoginUser(userData.value)"
+        >
+          <!-- hihi -->
+          <div class="form-item">
+            <label for="emailid">Email</label>
+            <input
+              type="email"
+              #emailid
+              required
+              [(ngModel)]="loginData.email"
+              name="email"
+            />
+            
+          </div>
+          <div class="form-item">
+            <label for="passwordid">Password</label>
+            <input
+              type="password"
+              id="password"
+              autocomplete="off"
+              #passwordid
+              required
+              [(ngModel)]="loginData.password"
+              name="password"
+            />
+            
+          </div>
+          <!-- <header>Create new account</header> -->
+
+          <input type="submit" class="inp login-btn py-2 mb-4" value="LOGIN" />
+          <br />
+          <button
+            type="button"
+            #sign_up
+            class="signup py-2"
+            (click)="displayReg()"
+          >
+            Create Account
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <div
+      class="col-md-6 d-flex justify-content-center align-items-center my-auto sign-sec"
+      *ngIf="toggle"
+    >
+      <div>
+        <h2 class="text-center mb-2 head">SIGN UP</h2>
+        <form
+          class=""
+          name="formData"
+          #userData="ngForm"
+          (ngSubmit)="registerUser(userData.value)"
+        >
+          <!-- <header>Create new account</header> -->
+          <div class="form-item">
+            <label for="firstname">First Name</label>
+            <input
+              type="text"
+              #firstname
+              required
+              [(ngModel)]="userModel.firstname"
+              name="firstname"
+            />
+            
+          </div>
+
+          <div class="form-item">
+            <label for="lastname">Last Name</label>
+            <input
+              type="text"
+              #lastname
+              required
+              [(ngModel)]="userModel.lastname"
+              name="lastname"
+            />
+          </div>
+
+          <div class="form-item">
+            <label for="email">Email</label>
+            <input
+              type="text"
+              #emailid
+              required
+              [(ngModel)]="userModel.email"
+              name="email"
+            />
+          </div>
+
+          <div class="form-item">
+            <label for="userName">Username</label>
+            <input
+              type="text"
+              #userName
+              required
+              [(ngModel)]="userModel.userName"
+              name="userName"
+            />
+          </div>
+
+          <div class="form-item">
+            <label for="phone">Phone Number</label>
+            <input
+            type="tel"
+            #phone
+            required
+            [(ngModel)]="userModel.phone"
+            name="phone"
+            />
+          </div>
+
+          <div class="form-item">
+            <label for="passwordid">Password</label>
+            <input
+              type="password"
+              #passwordid
+              required
+              [(ngModel)]="userModel.password"
+              name="password"
+            />
+          </div>
+          
+          <div class="form-item">
+            <label for="confirmpasswordid">Confirm Password</label>
+            <input
+            type="password"
+            #confirmpasswordid
+            required
+            [(ngModel)]="userModel.confirmpassword"
+            name="confirmpassword"
+            />
+          </div>
+
+          <input
+            type="submit"
+            class="login-btn inp py-2 mb-3"
+            value="SIGNUP"
+          />
+          <br />
+          <button
+            type="button"
+            #toggle
+            class="signup py-2"
+            (click)="displayReg()"
+          >
+            Back to Login
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

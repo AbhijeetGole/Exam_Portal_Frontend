@@ -1,0 +1,23 @@
+.selectFrom {
+    width: 80%;
+}
+
+.content {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.paginate {
+    margin-top: auto;
+}
+
+.card-table {
+    border-radius: 10px;
+    padding: 10px 0;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.question {
+    overflow-wrap: anywhere;
+}

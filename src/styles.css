@@ -1,95 +1,269 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap-icons/font/bootstrap-icons.css";
+
+:root {
+  --main-color: #241640;
+  --shade1: #301e56;
+  --shade2: #3c256b;
+}
+
 html {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-    margin: 0;
-    padding: 0;
-    width:100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  font-family: 'Raleway', sans-serif;
 }
 
 .modal-backdrop {
-    z-index: 1 !important;
-}
-
-.ngx-pagination .current {
-    background-color: #F0582E !important;
+  z-index: 1 !important;
 }
 
 .create-btn {
-    margin-bottom: 1%;
-    color: white;
-    background-color: #F0582E;
-    font-weight: 600;
-    border: none;
-}
-
-.create-btn:hover {
-    background-color: #F0582E !important;
-    color: white !important;
-    border: none;
+  margin-bottom: 1%;
+  color: var(--shade2);
+  font-weight: 600;
+  font-size: 20px;
+  border: none;
+  background: none;
 }
 
 .table-head {
-    background: #9da8e1;
-    height: 50px;
+  height: 40px;
 }
 
-thead tr th{
-    padding: 10px 0;
+thead tr th {
+  padding: 5px 0;
+  border-bottom: none;
 }
 
 .table-row {
-    border: none;
+  border: none;
+}
+
+.head-container {
+  margin-top: 5%;
+}
+
+.table-mobile {
+  margin-top: 10%;
 }
 
 /* -----------Table CSS-------------- */
 
 .modal-header {
-    background-color: #2a3889;
-    color: white;
+  background-color: #2a3889;
+  color: white;
 }
 
 .modal-footer {
-    background-color: #2a3889;
+  background-color: #2a3889;
 }
 
 .close-btn {
-    color: white !important;
-    outline: none;
-    border: none;
-    background-color: transparent;
+  color: var(--main-color) !important;
+  outline: none;
+  border: none;
+  background-color: transparent;
 }
 
-.btn-closed, .btn-closed:hover {
-    color: black;
-    background-color: white;
+.updateBtn {
+  font-weight: 600;
+} 
+
+/* --------------------------Sidenav and Nav--------------------------- */
+.sidenav {
+  position: absolute;
+  background: var(--main-color);
+  transition: all 0.5s ease;
+  position: fixed;
+  top: 4rem;
+  z-index: 1;
+  width: 16.5625rem;
+  height: calc(100% - 4rem);
+}
+.navbar {
+  background-color: var(--main-color);
+  border-bottom: 1px solid #fff;
 }
 
-.btn-update, .btn-update:hover {
-    color: white;
-    background-color: #F0582E;
+.logo-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
 }
 
-.updatebtn {
-    margin-right: 5px;
-    color: #2a3889;
+.logo {
+  background: #fff;
+  text-align: center;
+  width: 3rem;
+  min-width: 3rem;
+  border-radius: 0.313rem;
+  padding: 0.313rem;
+  cursor: pointer;
+  border: none;
 }
 
-.ngx-pagination .current {
-    background-color: #F0582E !important;
+.logo-text {
+  margin-left: 1rem;
+  padding: 0.313rem;
+  font-size: 24px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.close-btn {
+  margin-left: auto;
+  color: #fff;
+  background-color: transparent;
+  border: none;
+  width: 2rem;
+  height: 2rem;
+}
+
+.bi-x {
+  font-size: 16px;
+}
+
+.sidenav-collapsed {
+  width: 0;
+}
+
+.sidenav-nav {
+  list-style: none;
+  padding: 0.938rem;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: calc(100% - 3.65rem);
+  cursor: pointer;
 }
 
 .deleteBtn {
-    color: #DC151F;
+  color: #e60000;
 }
 
-.page-controls {
-    position: fixed;
-    bottom: 10px;
-    left: 50%;
-    transform: translate(-50%, 0);
+.sidenav-nav-item {
+  width: 100%;
+  margin-bottom: 0.625rem;
+}
+
+.sidenav-nav-link {
+  display: flex;
+  align-items: center;
+  height: 3rem;
+  color: #f3f3f3;
+  text-decoration: none;
+  transition: color 0.5s ease;
+  border-radius: 0.45rem;
+}
+
+.sidenav-nav-icon {
+  font-size: 22px;
+  width: 2rem;
+  min-width: 2rem;
+  margin: 0 0.5rem;
+  text-align: center;
+}
+
+.sidenav-link-text {
+  margin-left: 1.5rem;
+}
+
+.sidenav-nav-item:hover .sidenav-nav-link {
+  background-color: #fff;
+  color: #000;
+}
+
+.active {
+  background: #fff;
+}
+
+.active .sidenav-nav-icon,
+.active .sidenav-link-text {
+  color: #000;
+}
+
+.seperator {
+  color: #fff;
+}
+
+nav {
+  width: 100%;
+  height: 4rem;
+}
+
+.logout-btn {
+  background-color: white;
+  color: var(--main-color);
+  font-weight: 800;
+}
+
+.logout-btn:hover {
+  color: white;
+  background-color: var(--shade2);
+}
+
+.btn-closed,
+.btn-closed:hover {
+  color: white;
+  background-color: var(--main-color);
+  padding: 1% 2%;
+}
+
+.btn-update,
+.btn-update:hover {
+  color: white !important;
+  background-color: var(--main-color) !important;
+  padding: 1% 2%;
+}
+
+.modal-header {
+  color: var(--main-color);
+  background-color: white;
+}
+
+.modal-footer {
+  background-color: white;
+}
+
+.form-control,
+.form-select {
+  border: 1px solid var(--main-color);
+}
+
+.ngx-pagination .current {
+  background-color: var(--main-color) !important;
+  color: white;
+}
+
+.home {
+  color: #241640;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* --------------------------Sidenav and Nav--------------------------- */
+
+@media screen and (max-width: 992px) {
+  .head-container {
+    margin-top: 10%;
+  }
+}
+
+@media screen and (max-width: 780px) {
+  .head-container {
+    margin-top: 15%;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .head-container {
+    margin-top: 20%;
+  }
 }

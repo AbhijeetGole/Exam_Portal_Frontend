@@ -6,15 +6,30 @@ import Swal from 'sweetalert2';
 import { ElementRef, AfterViewInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { MaxLengthValidator } from '@angular/forms';
-
-import { UserQuizService } from 'src/app/user-quiz.service';
+import { Directive, HostListener } from '@angular/core'
+import { UserQuizService } from 'src/app/services/user-quiz.service';
 import { ApiService } from 'src/app/services/api.service';
+import { ResultService } from 'src/app/services/result.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import * as confetti from 'canvas-confetti';
+import { environment } from 'src/environments/environment';
+import { CookieService } from 'ngx-cookie-service';
 @Component({
   selector: 'app-quiz-page',
   templateUrl: './quiz-page.component.html',
   styleUrls: ['./quiz-page.component.css']
 })
+
+
 export class QuizPageComponent implements OnInit {
+
+  resultModel = {
+    "userId": "",
+    "quizId": "",
+    "result": 0,
+    "userName": ""
+  }
+  userData: any = {}
   public quizList: any = [];
   public options: any = [];
   public option: any = {};
@@ -26,6 +41,7 @@ export class QuizPageComponent implements OnInit {
   public correctAns: number = 0;
   public inCorrectAns: number = 0;
   isQuizCompleted: boolean = false;
+  level: any;
   questionInterval$: any;
   counter = 60;
   progress: number = 0;
@@ -37,8 +53,10 @@ export class QuizPageComponent implements OnInit {
   id: any;
   title: any;
   null: string = ''
+  uservalue: any;
   constructor(private apiService: ApiService, private quizService: UserQuizService, private router: Router,
-    private elementRef: ElementRef, private location: LocationStrategy) {
+    private elementRef: ElementRef, private location: LocationStrategy, private resultService: ResultService,
+    private cookie: CookieService, private http: HttpClient,) {
     this.id = localStorage.getItem("id")
     this.title = localStorage.getItem("title")
     this.endTime = localStorage.getItem("endTime")
@@ -47,8 +65,31 @@ export class QuizPageComponent implements OnInit {
       history.pushState(null, this.null, window.location.href);
     });
   }
-
+  private randomInRange(min: any, max: any) {
+    return Math.random() * (max - min) + min;
+  }
   ngOnInit(): void {
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'jwt': this.cookie.get('jwt')
+    });
+
+    this.http.get(environment.userUrl + 'exam-portal/token/validate', { headers: headers, withCredentials: true })
+      .subscribe((data: any) => {
+        this.uservalue = data
+
+        if (this.uservalue != 'user') {
+          // Swal.fire('warning',"You are not LoggedIn",'warning')
+          Swal.fire("Alert", "You are not LoggedIn", "warning")
+          this.router.navigate([''])
+
+
+        }
+      },(error: any) => {
+        Swal.fire("Alert","You are not LoggedIn","warning")
+        this.router.navigate([''])
+      })
     this.getAllQuiz(this.id);
     this.getAllQuestions();
     this.getUser();
@@ -76,9 +117,34 @@ export class QuizPageComponent implements OnInit {
       icon: 'info'
     }).then((e) => {
       if (e.isConfirmed) {
+
+        try {
+          confetti.create(undefined, { resize: true, useWorker: false })({
+            angle: this.randomInRange(20, 100),
+            shapes: ['square'],
+            spread: this.randomInRange(50, 60),
+            startVelocity: 80,
+            particleCount: this.randomInRange(450, 350),
+            ticks: 500,
+            origin: {
+              x: 0.2,
+              y: 0.8
+            }
+          });
+        } catch (e) {
+        }
         this.filteredQuestions.forEach((q: any) => {
+          this.level = q.difficultyLevel
           if (q.givenAns === q.answer) {
-            this.points += 10;
+            if (q.difficultyLevel === 'easy') {
+              this.points += 5;
+            }
+            else if (q.difficultyLevel === 'medium') {
+              this.points += 7;
+            }
+            else {
+              this.points += 10;
+            }
             this.correctAns++;
             this.marksGot += this.points
           }
@@ -86,11 +152,24 @@ export class QuizPageComponent implements OnInit {
             this.inCorrectAns++;
           }
         })
-        console.log(this.points)
+        console.log(this.filteredQuestions)
+        // console.log(this.points)
         this.isQuizCompleted = true;
         // localStorage.clear();
+        this.resultPage(this.resultModel)
         localStorage.removeItem("id")
       }
+    })
+  }
+
+  resultPage(resultModel: any) {
+    this.resultModel.result = this.points
+    this.resultModel.quizId = this.id
+    this.resultModel.userId = this.userData._id
+    this.resultModel.userName = this.userData.userName
+    this.resultService.result(resultModel).subscribe(res => {
+      console.log(res)
+      // res.result=this.points    
     })
   }
 
@@ -138,7 +217,15 @@ export class QuizPageComponent implements OnInit {
 
               if (q.givenAns === q.answer) {
 
-                this.points += 10;
+                if (q.difficultyLevel === 'easy') {
+                  this.points += 5;
+                }
+                else if (q.difficultyLevel === 'medium') {
+                  this.points += 7;
+                }
+                else {
+                  this.points += 10;
+                }
                 this.correctAns++;
                 this.marksGot += this.points
 
@@ -170,23 +257,23 @@ export class QuizPageComponent implements OnInit {
   }
   answerMarked() {
     if (this.filteredQuestions[this.currentQuestion].givenAns.length === 0) {
-      console.log("empty")
+      // console.log("empty")
     }
     else {
       this.filteredQuestions[this.currentQuestion].isAnswered = true;
-      console.log("filled")
+      // console.log("filled")
     }
   }
   lastAnswerMarked() {
 
     if (this.filteredQuestions[this.quizList.length - 1].givenAns.length === 0) {
-      console.log("empty")
+      // console.log("empty")
 
 
     }
     else {
       this.filteredQuestions[this.currentQuestion].isAnswered = true;
-      console.log("filled")
+      // console.log("filled")
     }
   }
   nextQuestion() {
@@ -223,7 +310,7 @@ export class QuizPageComponent implements OnInit {
     }
     return this.progress / 100;
   }
-  userData: any = {}
+
   getUser() {
     this.apiService.getUserInfo().subscribe((res: any) => {
 
@@ -231,5 +318,6 @@ export class QuizPageComponent implements OnInit {
 
     })
   }
+
 
 }

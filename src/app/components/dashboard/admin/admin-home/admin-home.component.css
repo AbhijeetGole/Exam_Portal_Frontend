@@ -1,0 +1,9 @@
+.chart-page {
+    height: 100vh;
+}
+element.style {
+    display: block;
+    box-sizing: border-box;
+    height: 300px;
+    width: 100% !important;
+}

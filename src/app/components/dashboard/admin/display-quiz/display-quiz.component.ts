@@ -3,11 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { ApiService } from 'src/app/services/api.service';
-import { QuestionSharingService } from 'src/app/services/question-sharing.service';
 import { QuizService } from 'src/app/services/quiz.service';
 import { environment } from 'src/environments/environment';
 import { UpdateDeletedQuestionGroupService } from 'src/app/services/update-deleted-question-group.service';
-
+import Swal from 'sweetalert2';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-display-quiz',
   templateUrl: './display-quiz.component.html',
@@ -20,18 +20,18 @@ export class DisplayQuizComponent implements OnInit {
   screenWidth: any;
   deleteQueId: any;
   showUpdateToast = false;
-  showDeleteToast = false;
+  showQuizDeleteToast = false;
+  showCopyToast = false;
   uservalue: any;
   page: number = 1;
   count: number = 0;
   tableSize: number = 7;
 
-  constructor(private quizService: QuizService, private apiSerive: ApiService,
+  constructor(private quizService: QuizService, private apiSerive: ApiService, private toastr: ToastrService,
     private http: HttpClient, private router: Router, private cookie: CookieService,
-    private questionSharingService: QuestionSharingService, 
-    private updateDeletedQuestionGroupService: UpdateDeletedQuestionGroupService) { 
-      this.screenWidth = window.innerWidth;
-    }
+    private updateDeletedQuestionGroupService: UpdateDeletedQuestionGroupService) {
+    this.screenWidth = window.innerWidth;
+  }
 
   ngOnInit(): void {
     const headers = new HttpHeaders({
@@ -43,38 +43,39 @@ export class DisplayQuizComponent implements OnInit {
       .subscribe((data: any) => {
         this.uservalue = data
         if (this.uservalue != 'admin') {
-          alert("You are not LoggedIn")
+          Swal.fire("Alert","You are not LoggedIn","warning")
           this.router.navigate([''])
         }
+      },(error: any) => {
+        Swal.fire("Alert","You are not LoggedIn","warning")
+        this.router.navigate([''])
       })
 
-      this.getQuizzes();
+    this.getQuizzes();
 
-      this.updateDeletedQuestionGroupService.selectedId.subscribe((id: any) => {
-        if(id != ''){
-          this.updateQuizWithId(id);
-        }
-      }, (error: any) => {
-        console.log(error.message);
-      })
+    this.updateDeletedQuestionGroupService.selectedId.subscribe((id: any) => {
+      if (id != '') {
+        this.updateQuizWithId(id);
+      }
+    }, (error: any) => {
+      console.log(error.message);
+    })
 
-      if(this.screenWidth<378){
-        this.tableSize = 4;
-      }
-      if(this.screenWidth>378 && this.screenWidth<480){
-        this.tableSize = 6;
-      }
-      if(this.screenWidth>480){
-        this.tableSize = 7;
-      }
+    if (this.screenWidth < 378) {
+      this.tableSize = 3;
+    }
+    if (this.screenWidth > 378 && this.screenWidth < 480) {
+      this.tableSize = 4;
+    }
+    if (this.screenWidth > 480) {
+      this.tableSize = 6;
+    }
   }
 
   getQuizzes() {
     this.quizService.getAllQuizes()
       .subscribe(
         (response: any) => {
-          console.log('response received');
-          console.log(response);
           this.quizzes = response;
         },
         (error: any) => {
@@ -87,26 +88,27 @@ export class DisplayQuizComponent implements OnInit {
     this.router.navigate(['quiz/createquiz']);
   }
 
-  updateQuiz(id: any){
+  updateQuiz(id: any) {
     this.router.navigate(['quiz/updatequiz', id]);
   }
 
   deleteQuizById(id: any) {
-    this.showDeleteToast = false;
+    // this.showQuizDeleteToast = false;
     this.quizService.deleteQuizById(id).subscribe((res: any) => {
       console.log(res)
-      this.showDeleteToast = true;
+      this.toastr.error("Quiz Deleted successfully!");
+      // this.showQuizDeleteToast = true;
       this.getQuizzes();
     })
   }
-  
-  updateQuizWithId(id: any){
+
+  updateQuizWithId(id: any) {
     this.quizzes.forEach(quiz => {
       let index = quiz.questionGroup.indexOf(id);
 
-      if(index != -1){
+      if (index != -1) {
         quiz.questionGroup.splice(index, 1);
-        
+
         let quizUpdate = {
           title: quiz.title,
           description: quiz.topic,
@@ -127,7 +129,6 @@ export class DisplayQuizComponent implements OnInit {
       .subscribe(
         (response: any) => {
           this.que = response;
-          console.log("clicked")
         },
         (error: any) => {
           console.error('Request failed with error' + error);
@@ -144,5 +145,14 @@ export class DisplayQuizComponent implements OnInit {
     this.tableSize = event.target.value;
     this.page = 1;
     this.getQuizzes();
+  }
+
+  copyToClipboard(el: HTMLDivElement) {
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(el.innerText)
+      this.showCopyToast = true;
+    } else {
+      console.log('Browser do not support Clipboard API');
+    }
   }
 }

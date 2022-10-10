@@ -1,0 +1,86 @@
+<div class="content mb-auto">
+  <div class="container mt-4">
+    <div class="d-flex justify-content-between mt-5">
+      <h4>Question Group</h4>
+      <button id="createQuestionGroup" class="create-btn" (click)="createQuestionGroup()">
+        <i class="bi bi-plus-circle-fill"></i> Create New
+      </button>
+    </div>
+  </div>
+  <div class="container">
+    <div class="card-table">
+      <table class="table borderless">
+        <thead class="table-head">
+          <tr>
+            <th scope="col" class="text-center col-md-1">Sr No.</th>
+            <th scope="col" class="col-md-5">Title</th>
+            <th scope="col" class="col-md-4">Topic</th>
+            <th scope="col" class="text-center col-md-2">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let questiongrp of questionGrps | paginate
+            : {
+                itemsPerPage: tableSize,
+                currentPage: page,
+                totalItems: count
+              }; let i = index" class="table-data">
+            <td scope="row" class="text-center table-row align-middle">
+              {{ (page - 1) * tableSize + (i + 1) }}
+            </td>
+            <td class="align-middle table-row">{{ questiongrp.title }}</td>
+            <td class="align-middle table-row">
+              {{ questiongrp.topic }}
+            </td>
+            <td class="text-center table-row">
+              <button class="btn updatebtn align-items-center" placement="top" ngbTooltip="Update Question"
+                #{{question._id}} (click)="updateQuestionGroup(questiongrp._id)">
+                <i class="bi bi-pencil-square"></i>
+              </button>
+              <button class="btn deleteBtn" placement="top" ngbTooltip="Delete Question!" #{{question._id}}
+                (click)="getQuestionGroupById(questiongrp._id)" data-bs-toggle="modal" data-bs-target="#deletemodal">
+                <i class="bi bi-trash"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="paginate d-flex justify-content-center mt-auto">
+    <div class="page-controls">
+      <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+      </pagination-controls>
+    </div>
+  </div>
+</div>
+<div class="d-flex justify-content-center">
+  <div class="toast-container position-fixed" *ngIf="showCreateToast">
+    <ngb-toast class="bg-success text-light">
+      Question Group Created Successfully
+    </ngb-toast>
+  </div>
+</div>
+
+<div class="modal fade" id="deletemodal" data-bs-keyboard="false" tabindex="-1" role="dialog"
+  aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalLabel">Delete Question</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form class="myForm text-center">Confirm Deletion?</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          No
+        </button>
+        <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="deleteQuestionGroup(que._id)">
+          Yes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

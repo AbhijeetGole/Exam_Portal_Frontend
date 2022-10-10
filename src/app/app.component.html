@@ -1,5 +1,2 @@
-<app-sidenavbar *ngIf="!isLanding() && role=='admin'"></app-sidenavbar>
-
-<app-sidenavbar-user *ngIf="!isLanding() && !QuizPage()  &&  role=='user'"></app-sidenavbar-user>
-
+<app-sidenavbar *ngIf="!isLanding() && !QuizPage()"></app-sidenavbar>
 <router-outlet></router-outlet>

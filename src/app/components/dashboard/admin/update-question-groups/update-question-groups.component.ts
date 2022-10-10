@@ -5,7 +5,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import { environment } from 'src/environments/environment';
-
+import { FormGroup, FormControl, Validators, Form } from '@angular/forms';
+import Swal from 'sweetalert2';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-update-question-groups',
   templateUrl: './update-question-groups.component.html',
@@ -17,6 +19,11 @@ export class UpdateQuestionGroupsComponent implements OnInit {
   filteredQuestions: any[] = [];
   checked: any[] = [];
   selectAll: boolean = false;
+  screenWidth:any;
+  page: number = 1;
+  count: number = 0;
+  tableSize: number = 7;
+  
   QuestionGroup: any = {
     title: '',
     topic: '',
@@ -24,8 +31,18 @@ export class UpdateQuestionGroupsComponent implements OnInit {
   uservalue: any;
 
   constructor(private questionService: QuestionService, private questionGrpService: QuestionGrpService,
-    private router: Router, private route: ActivatedRoute, private cookie: CookieService, private http: HttpClient) { }//, private questionGroupDisplay: QuestionGroupDisplayComponent) { }
-
+    private router: Router, private route: ActivatedRoute, private toastr: ToastrService, private cookie: CookieService, private http: HttpClient) 
+    { this.screenWidth = window.innerWidth; }
+    questionGroup=new FormGroup({
+      title:new FormControl('',[Validators.required]),
+      topic:new FormControl('',[Validators.required])
+    })
+    get TITLE():FormControl{
+      return this.questionGroup.get('title') as FormControl
+    }
+    get TOPIC():FormControl{
+      return this.questionGroup.get('topic') as FormControl
+    }
   ngOnInit(): void {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -36,13 +53,26 @@ export class UpdateQuestionGroupsComponent implements OnInit {
       .subscribe((data: any) => {
         this.uservalue = data
         if (this.uservalue != 'admin') {
-          alert("You are not LoggedIn")
+          Swal.fire("Alert","You are not LoggedIn","warning")
           this.router.navigate([''])
         }
+      },(error: any) => {
+        Swal.fire("Alert","You are not LoggedIn","warning")
+        this.router.navigate([''])
       })
     this.getQuestions();
     this.id = this.route.snapshot.paramMap.get('id');
     this.getQuestionGroupById(this.id);
+
+    if (this.screenWidth < 378) {
+      this.tableSize = 3;
+    }
+    if (this.screenWidth > 378 && this.screenWidth < 480) {
+      this.tableSize = 4;
+    }
+    if (this.screenWidth > 480) {
+      this.tableSize = 7;
+    }
   }
 
   getQuestions() {
@@ -75,7 +105,8 @@ export class UpdateQuestionGroupsComponent implements OnInit {
       questionID: this.checked
     }
     this.questionGrpService.updateQuestionGroup(this.id, questionGroupUpdate).subscribe((response: any) => {
-      console.log('Question Group Updated Successfully!');
+      // console.log('Question Group Updated Successfully!');
+      this.toastr.success("Question group updated!");
     }, (error) => {
       console.log(error);
     });
@@ -127,6 +158,17 @@ export class UpdateQuestionGroupsComponent implements OnInit {
         }
       });
     }
+  }
+
+  onTableDataChange(event: any) {
+    this.page = event;
+    this.getQuestions();
+  }
+
+  onTableSizeChange(event: any): void {
+    this.tableSize = event.target.value;
+    this.page = 1;
+    this.getQuestions();
   }
 
 }

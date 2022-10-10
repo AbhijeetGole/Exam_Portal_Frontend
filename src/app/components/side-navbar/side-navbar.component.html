@@ -1,27 +1,42 @@
-<nav class="navbar">
+<nav class="navbar fixed-top">
   <div class="container-fluid">
     <div class="logo-container d-flex align-items-center">
-      <button class="logo" (click)="toggleCollapse()" *ngIf="collapsed"><i class="bi bi-list"></i></button>
-      <button class="logo" (click)="toggleCollapse()" *ngIf="!collapsed"><i class="bi bi-x"></i></button>
-      <div class="logo-text">ZenQuiz</div>
+      <button class="logo" (click)="toggleCollapse()" *ngIf="collapsed">
+        <i class="bi bi-list"></i>
+      </button>
+      <button class="logo" (click)="toggleCollapse()" *ngIf="!collapsed">
+        <i class="bi bi-x"></i>
+      </button>
+      <div class="logo-text">
+        <img src="./assets/zensar_logo.png " alt="" style="width: 30px" />
+        ZenQuiz
+      </div>
     </div>
   </div>
 </nav>
-<div class="d-flex sidenav flex-column" [ngClass]="collapsed ? 'sidenav-collapsed' : ''">
-
+<div
+  class="d-flex sidenav flex-column"
+  [ngClass]="collapsed ? 'sidenav-collapsed' : ''"
+>
   <ul class="sidenav-nav d-flex flex-column mb-auto">
     <li class="sidenav-nav-item" *ngFor="let data of navData">
-      <a class="sidenav-nav-link" [routerLink]="[data.routerLink]" routerLinkActive="active" (click)="toggleCollapse()"
-        [routerLinkActiveOptions]="{exact: true}">
+      <a
+        class="sidenav-nav-link"
+        [routerLink]="[data.routerLink]"
+        routerLinkActive="active"
+        (click)="toggleCollapse()"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
         <i class="sidenav-nav-icon" [class]="data.icon" *ngIf="!collapsed"></i>
         <span class="sidenav-link-text" *ngIf="!collapsed">{{
           data.label
-          }}</span>
+        }}</span>
       </a>
     </li>
   </ul>
-  <hr class="seperator" *ngIf="!collapsed">
-  <button class="btn btn-success mt-auto" (click)="logout()" *ngIf="!collapsed"><i
-      class="sidenav-nav-icon bi bi-box-arrow-right align-middle"></i><span class="align-middle"
-      *ngIf="!collapsed">Logout</span></button>
+  <hr class="seperator" *ngIf="!collapsed" />
+  <button class="btn logout-btn mt-auto mb-3 me-3 ms-3" (click)="logout()" *ngIf="!collapsed">
+    <i class="sidenav-nav-icon bi bi-box-arrow-right align-middle"></i
+    ><span class="align-middle" *ngIf="!collapsed">Logout</span>
+  </button>
 </div>

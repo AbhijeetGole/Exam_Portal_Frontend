@@ -1,0 +1,19 @@
+.content {
+    height: 100vh;
+}
+
+.card-table {
+    padding: 10%;
+    border-radius: 10px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.quiz-btn {
+    background-color: var(--shade1);
+    border: 1px solid var(--shade1);
+    color: white;
+}
+
+.quiz-btn:hover {
+    border: 1px solid var(--shade1);
+}  

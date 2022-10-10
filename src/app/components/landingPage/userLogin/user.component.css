@@ -7,9 +7,16 @@ body {
   padding: 4%;
 }
 
-.page-wrap {
-padding: 5%;
+.login-wrap {
+  padding: 5%;
+  width: 60%;
 }
+
+.signup-wrap {
+  padding: 4%;
+  width: 75%;
+}
+
 .login-btn {
   width: 100%;
   outline: none;
@@ -19,13 +26,15 @@ padding: 5%;
 }
 
 .log-sec {
-background-color: #10005d;height: 100vh;
+  background-color: var(--main-color);
+  height: 100vh;
 }
 
 .sign-sec {
-background-color: #10005d;
-height: 100vh;
+  background-color: var(--main-color);
+  height: 100vh;
 }
+
 .signup {
   display: flex;
   float: right;
@@ -37,70 +46,40 @@ height: 100vh;
 }
 
 .head {
-color: white;
+  color: white;
 }
 
-
-.form-item{
-  position: relative;
-  margin-bottom: 15px;
-}
-.form-item input{
+.form-item input {
   display: block;
-  width: 400px;
+  width: 100%;
   height: 45px;
   background: transparent;
   border: solid 2px #ccc;
-  transition: all .3s ease;
   border-radius: 5px;
   padding: 0 15px
 }
-.form-item input:focus{
+
+.form-item input:focus {
   border-color: white;
 }
-.form-item label{
-  position: absolute;
-  cursor: text;
-  z-index: 2;
-  top: 13px;
-  left: 10px;
-  font-size: 14px;
-  font-weight: bold;
-  background: #10005d;
-  padding: 0 10px;
+
+.inputField, ::placeholder {
   color: white;
-  transition: all .3s ease
-}
-.form-item input:focus + label,
-.form-item input:valid + label{
-  font-size: 11px;
-  top: -5px
 }
 
-input, select, textarea {
-  color: white;
-  }
-
-  .inp {
-    color: black !important;
-    font-weight: 700;
-    border-radius: 5px;
-  }
-
-.form-item input:focus + label{
-  color: white
+.inp {
+  color: black !important;
+  font-weight: 700;
+  border-radius: 5px;
 }
-
-
 
 @media screen and (max-width: 480px) {
-  .form-item input{
+  .form-item input {
     display: block;
-    width: 300px;
+    width: 100%;
     height: 45px;
     background: transparent;
     border: solid 2px #ccc;
-    transition: all .3s ease;
     border-radius: 5px;
     padding: 0 15px
   }
@@ -112,9 +91,17 @@ input, select, textarea {
   .zen-info {
     height: 40vh;
     padding: 4%;
-}
+  }
 
-.log-sec {
-  background-color: #10005d;height: 60vh;
-}
+  .login-wrap, .signup-wrap {
+    width: 80%;
+  }
+
+  .log-sec {
+    height: 60vh;
+  }
+
+  .sign-sec {
+    height: 120vh;
+  }
 }
